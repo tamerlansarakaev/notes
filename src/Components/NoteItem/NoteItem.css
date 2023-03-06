@@ -1,0 +1,45 @@
+.note-item {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+  min-height: 250px;
+  max-width: 17%;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.note-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  height: 100%;
+  padding: 10px;
+  border: 2px solid #1d1d1d;
+  box-sizing: border-box;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.5s;
+  background: #1d1d1d;
+}
+
+.note-box:hover {
+  border-color: #fab906;
+}
+
+.note-title {
+  font-weight: 600;
+}
+
+.note-end-text {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.note-end-time {
+  margin-top: 5px;
+  text-align: center;
+  font-weight: 500;
+}
