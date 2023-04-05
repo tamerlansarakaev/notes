@@ -1,2 +1,3 @@
 # You must wait for the next update
-![Znotes](https://user-images.githubusercontent.com/96797238/229992993-bdc2070f-ba6f-492d-a714-729c5677898b.png)
+
+![notes](https://user-images.githubusercontent.com/96797238/230118468-01fa132e-1a52-4e1e-939a-e1a18899b3c5.png)
