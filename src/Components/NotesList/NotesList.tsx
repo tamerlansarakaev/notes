@@ -1,28 +1,28 @@
 import React from 'react';
-import uniqid from 'uniqid';
-import { Container } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 // Types
-import { INote } from '../../Types/Types';
+import { INote, INotesList } from '../../Types/Types';
 
 // Components
 import NoteItem from '../NoteItem/NoteItem';
 
 // Styles
-import './NotesList.css';
+import './NotesList.scss';
 
-type Props = {};
+export default function NotesList() {
+  const [notes, setNotes] = React.useState<INote[]>();
+  const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
 
-export default function NotesList({}: Props) {
-  const id = uniqid();
-  const [notes, setNotes] = React.useState<INote[]>([
-    { id, title: 'Hello my World', description: 'Thanks' },
-    { id, title: 'Hello my World', description: 'Thanks' },
-    { id, title: 'Hi', description: 'fdfdf' },
-    { id, title: 'Hi', description: 'fdfdf' },
-    { id, title: 'Hi', description: 'fdfdf' },
-    { id, title: 'What', description: 'fdfdfdfdf' },
-  ]);
+  React.useEffect(() => {
+    if (allNotes) {
+      const newArray = [...allNotes];
+      const sortNotes = newArray.sort((a, b) => (a.title > b.title ? 1 : -1));
+      console.log(1);
+      setNotes(sortNotes);
+    }
+  }, [allNotes]);
+
   return (
     <div className="notes-list">
       {notes &&

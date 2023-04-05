@@ -5,6 +5,8 @@ export interface INote {
 }
 
 export interface INotesList {
-  notes: INote;
-  changeNotes: (e: INote) => void;
+  rootReducer: {
+    notes: INote[];
+  };
+  changeNotes?: (e: INote) => void;
 }

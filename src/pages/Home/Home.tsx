@@ -1,28 +1,25 @@
 // MUI for App
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 // Components
 import Header from '../../Components/Header/Header';
-
-// Styles
-import './Home.css';
 import NotesList from '../../Components/NotesList/NotesList';
 
-type Props = {};
+// Styles
+import './Home.scss';
 
-export default function Home({}: Props) {
+export default function Home() {
   return (
-    <Container
+    <Box
       sx={{
         bgcolor: '#2E2E2E',
         color: 'white',
         minHeight: '100vh',
         minWidth: '100%',
-        paddingTop: '10px',
       }}
     >
       <Header />
       <NotesList />
-    </Container>
+    </Box>
   );
 }
