@@ -3,5 +3,7 @@
   width: 100%;
   flex-wrap: wrap;
   height: 100%;
+  box-sizing: border-box;
+  padding: 0 35px;
   gap: 10%;
 }
