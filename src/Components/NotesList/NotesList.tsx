@@ -18,7 +18,6 @@ export default function NotesList() {
     if (allNotes) {
       const newArray = [...allNotes];
       const sortNotes = newArray.sort((a, b) => (a.title > b.title ? 1 : -1));
-      console.log(1);
       setNotes(sortNotes);
     }
   }, [allNotes]);
