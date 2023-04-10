@@ -1,6 +1,8 @@
 // Global import for App
 import React from 'react';
 import { BrowserRouter, Routes, Route, useActionData } from 'react-router-dom';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 // Other
 import { useDispatch } from 'react-redux';
@@ -8,10 +10,12 @@ import { defaultData } from './redux/reducers/rootReducer';
 
 // Pages for App
 import Home from './pages/Home/Home';
+import Note from './pages/Note/Note';
+import Login from './pages/Login/Login';
 
 // Styles
 import './App.scss';
-import Note from './pages/Note/Note';
+import './vars/vars.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +46,7 @@ function App() {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/notes/:id" element={<Note />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

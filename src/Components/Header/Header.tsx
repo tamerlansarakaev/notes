@@ -21,36 +21,6 @@ export default function Header({ children }: IHeader) {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <ListItemButton
           sx={{
-            padding: 1,
-            borderRadius: '8px',
-            display: 'flex',
-            width: '41px',
-            height: '41px',
-            boxSizing: 'border-box',
-            justifyContent: 'center',
-          }}
-        >
-          <FormatListBulletedIcon
-            className="list-view-icon"
-            sx={{ fill: '#A4A4A4' }}
-          />
-        </ListItemButton>
-        <ListItemButton
-          sx={{
-            padding: 1,
-            borderRadius: '8px',
-            display: 'flex',
-            width: '41px',
-            height: '41px',
-            boxSizing: 'border-box',
-            justifyContent: 'center',
-          }}
-        >
-          <GridViewIcon className="grid-view-icon" sx={{ fill: '#A4A4A4' }} />
-        </ListItemButton>
-
-        <ListItemButton
-          sx={{
             borderRadius: '8px',
             display: 'flex',
             width: '41px',

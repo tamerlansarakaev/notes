@@ -1,6 +1,15 @@
 import React from 'react';
-import { Box, Input, TextareaAutosize, Typography } from '@mui/material';
+import {
+  Box,
+  Input,
+  ListItemButton,
+  TextareaAutosize,
+  Typography,
+} from '@mui/material';
 import { useParams } from 'react-router-dom';
+
+// Icons
+import UpperCaseIcon from '../../assets/upperCase.svg';
 
 // Components
 import Header from '../../Components/Header/Header';
@@ -13,6 +22,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { INote, INotesList } from '../../Types/Types';
 import Button from '../../Components/UI/Button/Button';
 import { changeNote } from '../../redux/reducers/rootReducer';
+import { ReactSVG } from 'react-svg';
+import { findCurrentNote } from '../../utils';
 
 function Note() {
   const [changeActive, setChangeActive] = React.useState<boolean>(false);
@@ -28,21 +39,27 @@ function Note() {
     });
 
     const resultNotes = [...filterNotes, note];
-
     dispatch(changeNote(resultNotes));
   }, [note?.title, note?.description]);
 
-  const findCurrentNote = (notes: INote[]) => {
-    const findNote = notes.find((note) => {
-      return note.id.toString() === id;
+  const upperCaseNote = () => {
+    const upperCaseTitle = note?.title.toUpperCase();
+    const upperCaseDescription = note?.description.toUpperCase();
+
+    setNote((note: any) => {
+      return {
+        ...note,
+        title: upperCaseTitle,
+        description: upperCaseDescription,
+      };
     });
 
-    setNote(findNote);
+    setChangeActive(true);
   };
 
   React.useEffect(() => {
     if (allNotes && !note) {
-      findCurrentNote(allNotes);
+      setNote(findCurrentNote(allNotes, id));
       setLoading(false);
     }
   }, [allNotes]);
@@ -63,6 +80,23 @@ function Note() {
       }}
     >
       <Header>
+        <ListItemButton
+          sx={{
+            display: 'flex',
+            maxWidth: '41px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxSizing: 'border-box',
+            borderRadius: '8px',
+          }}
+          disableRipple
+          onClick={() => upperCaseNote()}
+          onBlur={() => {
+            setChangeActive(false);
+          }}
+        >
+          <ReactSVG src={UpperCaseIcon} />
+        </ListItemButton>
         <Box sx={{ margin: 'auto 0' }}>
           <Button title="Удалить" />
         </Box>
@@ -111,6 +145,7 @@ function Note() {
                   type="text"
                   className="note-page-title"
                   name="title"
+                  inputProps={{ maxLength: 50 }}
                   onChange={(e) => {
                     setChangeActive(true);
                     setNote((note: any) => {
@@ -136,7 +171,7 @@ function Note() {
                   onBlur={() => {
                     setChangeActive(false);
                   }}
-                  placeholder="Write your text"
+                  placeholder="Write your description for the title"
                   value={note && note.description}
                 />
               </form>
