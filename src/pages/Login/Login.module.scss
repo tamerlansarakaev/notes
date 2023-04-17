@@ -6,6 +6,7 @@
   align-items: center;
   padding: 102px 52px;
   font-family: 'Roboto';
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.33);
   background: var(--blackLightColor);
   text-transform: uppercase;
   box-sizing: border-box;
@@ -39,9 +40,9 @@
   background: var(--whiteColor);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  padding: 12px 0px 12px 20px !important;
-  font-size: 20px !important;
-  color: var(--blackColor) !important;
+  padding: 12px 20px 12px 20px;
+  font-size: 20px;
+  color: var(--blackColor);
 }
 
 .loginFormGroup {

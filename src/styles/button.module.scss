@@ -20,3 +20,28 @@
 .redLightButton:active {
   background: #d46f6f;
 }
+
+.blackLightButton {
+  border: none;
+  background: #3a3a3a;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 15px 57px;
+  font-family: 'Roboto';
+  font-style: normal;
+  transition: background 0.5s;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  text-transform: uppercase;
+  color: var(--whiteColor);
+}
+
+.blackLightButton:hover {
+  cursor: pointer;
+  background: #4c4b4b;
+}
+
+.blackLightButton:active {
+  background: #6b6a6a;
+}

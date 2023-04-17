@@ -1,17 +1,28 @@
 import React from 'react';
 import { Container, Input, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+
+// Firebase
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import app from '../../Api/api';
-import { Navigate, useNavigate } from 'react-router-dom';
+
+// Redux
+import { signedIn } from '../../redux/reducers/rootReducer';
+import { IModalReducer, IRootReducer } from '../../Types/Types';
+import { modalClose, modalOpen } from '../../redux/reducers/modalReducer';
+import { useDispatch, useSelector } from 'react-redux';
+
+// Types
+import { types } from '../../redux/types';
+
 // Components
 import Button from '../../Components/UI/Button/Button';
+import CustomModal from '../../Components/Modal/CustomModal';
 
 // Styles
 import classNames from './Login.module.scss';
 import buttonClassNames from '../../styles/button.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { signedIn } from '../../redux/reducers/rootReducer';
-import { IRootReducer } from '../../Types/Types';
 
 interface IFormState {
   mail: string;
@@ -31,9 +42,14 @@ const Login: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const modalStatus = useSelector(
+    (state: IModalReducer) => state.modalReducer.modalStatus
+  );
+
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     const auth = getAuth(app);
     e.preventDefault();
+
     try {
       const loginUser = await signInWithEmailAndPassword(
         auth,
@@ -41,13 +57,21 @@ const Login: React.FunctionComponent = () => {
         formState.password
       );
       dispatch(signedIn({ loginStatus: true }));
-
       return loginUser;
     } catch (err) {
-      dispatch(signedIn({ loginStatus: false }));
+      dispatch(
+        modalOpen({
+          modalStatus: true,
+          modalType: types.INCORRECT_FORM,
+        })
+      );
     }
     return;
   };
+
+  function closeModal() {
+    dispatch(modalClose());
+  }
 
   React.useEffect(() => {
     if (loginStatus) {
@@ -118,6 +142,26 @@ const Login: React.FunctionComponent = () => {
           </fieldset>
         </fieldset>
       </form>
+      <Modal
+        open={modalStatus && modalStatus}
+        onClose={() => closeModal()}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div>
+          <CustomModal text="Write correct Login and Password ">
+            <Button
+              className={buttonClassNames.blackLightButton}
+              onClick={() => closeModal()}
+            >
+              Close
+            </Button>
+          </CustomModal>
+        </div>
+      </Modal>
     </Container>
   );
 };

@@ -40,7 +40,12 @@ export default function NotesList() {
         })}
       {!notes?.length && (
         <span
-          style={{ fontSize: '20px', fontFamily: 'Roboto', fontWeight: '600' }}
+          style={{
+            fontSize: '20px',
+            fontFamily: 'Roboto',
+            fontWeight: '600',
+            userSelect: 'none',
+          }}
         >
           {statusNotes}
         </span>
