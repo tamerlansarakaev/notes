@@ -1,46 +1,59 @@
-// Global
 import React from 'react';
 import { Container, Input, Typography } from '@mui/material';
-
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import app from '../../Api/api';
+import { Navigate, useNavigate } from 'react-router-dom';
 // Components
 import Button from '../../Components/UI/Button/Button';
 
 // Styles
 import classNames from './Login.module.scss';
 import buttonClassNames from '../../styles/button.module.scss';
-import { api, db } from '../../Api/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { signedIn } from '../../redux/reducers/rootReducer';
+import { IRootReducer } from '../../Types/Types';
 
 interface IFormState {
-  userId: string;
+  mail: string;
   password: string;
 }
 
-const Login = () => {
-  const [status, setStatus] = React.useState(false);
+const Login: React.FunctionComponent = () => {
   const [formState, setFormState] = React.useState<IFormState>({
-    userId: '',
+    mail: '',
     password: '',
   });
 
-  async function getData() {
+  const loginStatus = useSelector(
+    (state: IRootReducer) => state.rootReducer.loginStatus
+  );
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    const auth = getAuth(app);
+    e.preventDefault();
     try {
-      // api.get('/test');
-    } catch(err) {
-      console.log(err)
+      const loginUser = await signInWithEmailAndPassword(
+        auth,
+        formState.mail,
+        formState.password
+      );
+      dispatch(signedIn({ loginStatus: true }));
+
+      return loginUser;
+    } catch (err) {
+      dispatch(signedIn({ loginStatus: false }));
     }
-  }
+    return;
+  };
 
   React.useEffect(() => {
-    getData();
-  }, []);
-
-  const handleSubmitForm = React.useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      api.get('/test.json');
-    },
-    [formState]
-  );
+    if (loginStatus) {
+      navigate('/');
+    }
+  }, [loginStatus]);
 
   return (
     <Container
@@ -67,18 +80,18 @@ const Login = () => {
             Sign in
           </Typography>
           <fieldset className={classNames.loginFormGroup}>
-            <label htmlFor="id">User ID</label>
+            <label htmlFor="mail">mail</label>
             <Input
               className={classNames.loginInput}
               disableUnderline
               onChange={(e) =>
                 setFormState((form) => {
-                  return { ...form, userId: e.target.value };
+                  return { ...form, mail: e.target.value };
                 })
               }
               required
-              name="id"
-              id="id"
+              name="mail"
+              id="mail"
             />
           </fieldset>
           <fieldset className={classNames.loginFormGroup}>
@@ -109,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default React.memo(Login);

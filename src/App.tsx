@@ -1,12 +1,16 @@
 // Global import for App
 import React from 'react';
-import { BrowserRouter, Routes, Route, useActionData } from 'react-router-dom';
-import firebase from 'firebase/app';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
 import 'firebase/auth';
 
 // Other
-import { useDispatch } from 'react-redux';
-import { defaultData } from './redux/reducers/rootReducer';
+import { signInUser } from './redux/reducers/rootReducer';
+import app from './Api/api';
+import { IRootReducer, IUser } from './Types/Types';
+import { validateLoginStatus } from './utils';
 
 // Pages for App
 import Home from './pages/Home/Home';
@@ -17,36 +21,75 @@ import Login from './pages/Login/Login';
 import './App.scss';
 import './vars/vars.scss';
 
-function App() {
+function App(): React.ReactElement {
   const dispatch = useDispatch();
+  const [statusUserLogin, setStatusUserLogin] = React.useState('');
+  const loginStatus = useSelector(
+    (state: IRootReducer) => state.rootReducer.loginStatus
+  );
 
-  const notes = [
-    {
-      id: 1,
-      title: 'Hello my World',
-
-      description: '',
-    },
-    { id: 2, title: 'Hello my World', description: 'Thanks' },
-    { id: 3, title: 'Hi', description: 'fdfdf' },
-    { id: 4, title: 'Hi', description: 'fdfdf' },
-    { id: 5, title: 'Hi', description: 'fdfdf' },
-    { id: 6, title: 'What', description: 'fdfdfdfdf' },
-  ];
-  function loadData() {
-    dispatch(defaultData(notes));
+  async function getData(): Promise<IUser | unknown> {
+    const auth = getAuth(app);
+    const validateUser = await validateLoginStatus(auth);
+    const db = getDatabase();
+    const starCountRef = ref(db, '/users');
+    const result = new Promise((resolve) => {
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        const userArray = Object.values(data);
+        if (validateUser) {
+          const result: any = userArray.find((user: any) => {
+            return validateUser.email === user.email;
+          });
+          resolve(result);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+    if (!validateUser) {
+      return null;
+    }
+    return result;
   }
 
   React.useEffect(() => {
-    loadData();
-  }, []);
+    const setData = async () => {
+      const data: any = await getData();
+      return data;
+    };
+
+    setData().then((data: IUser) => {
+      if (data) {
+        dispatch(
+          signInUser({
+            notes: data.notes,
+            user: { email: data.email, id: data.id },
+            authStatus: 'Authorized',
+          })
+        );
+        setStatusUserLogin('Authorized');
+        return;
+      } else {
+        dispatch(
+          signInUser({ authStatus: 'Not Authorized', notes: [], user: {} })
+        );
+        setStatusUserLogin('Not Authorized');
+        return data;
+      }
+    });
+  }, [loginStatus]);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/notes/:id" element={<Note />} />
-        <Route path="/login" element={<Login />} />
+        {statusUserLogin === 'Not Authorized' ? (
+          <Route path="/login" element={<Login />} />
+        ) : (
+          ''
+        )}
       </Routes>
     </BrowserRouter>
   );

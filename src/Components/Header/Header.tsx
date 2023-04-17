@@ -10,38 +10,41 @@ import { Link } from 'react-router-dom';
 
 interface IHeader {
   children?: React.ReactNode;
+  activeBackButton?: boolean;
 }
 
-export default function Header({ children }: IHeader) {
+export default function Header({ children, activeBackButton = true }: IHeader) {
   return (
     <div
       className="header-notes"
-      style={{ display: 'flex', justifyContent: 'space-between' }}
+      style={{ display: 'flex', justifyContent: 'space-between',minHeight: '67px' }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <ListItemButton
-          sx={{
-            borderRadius: '8px',
-            display: 'flex',
-            width: '41px',
-            height: '41px',
-            boxSizing: 'border-box',
-            justifyContent: 'center',
-          }}
-        >
-          <Link
-            to={'/'}
-            style={{
+        {activeBackButton && (
+          <ListItemButton
+            sx={{
+              borderRadius: '8px',
               display: 'flex',
-              padding: '8px 16px',
+              width: '41px',
+              height: '41px',
               boxSizing: 'border-box',
-              textDecoration: 'none',
-              outline: 'none',
+              justifyContent: 'center',
             }}
           >
-            <ArrowBackIosNewIcon fontSize="small" sx={{ fill: '#A4A4A4' }} />
-          </Link>
-        </ListItemButton>
+            <Link
+              to={'/'}
+              style={{
+                display: 'flex',
+                padding: '8px 16px',
+                boxSizing: 'border-box',
+                textDecoration: 'none',
+                outline: 'none',
+              }}
+            >
+              <ArrowBackIosNewIcon fontSize="small" sx={{ fill: '#A4A4A4' }} />
+            </Link>
+          </ListItemButton>
+        )}
       </Box>
       {children ? children : ''}
     </div>

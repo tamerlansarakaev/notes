@@ -98,7 +98,7 @@ function Note() {
           <ReactSVG src={UpperCaseIcon} />
         </ListItemButton>
         <Box sx={{ margin: 'auto 0' }}>
-          <Button title="Удалить" />
+          <Button>Удалить</Button>
         </Box>
       </Header>
       {!loading ? (
@@ -140,7 +140,12 @@ function Note() {
                   Редактирование
                 </span>
               </Typography>
-              <form className="note-page-form">
+              <form
+                className="note-page-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
                 <Input
                   type="text"
                   className="note-page-title"
