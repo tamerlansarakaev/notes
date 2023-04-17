@@ -11,16 +11,26 @@ import { Link } from 'react-router-dom';
 interface IHeader {
   children?: React.ReactNode;
   activeBackButton?: boolean;
+  className?: string;
 }
 
-export default function Header({ children, activeBackButton = true }: IHeader) {
+export default function Header({
+  children,
+  activeBackButton = true,
+  className = '',
+}: IHeader) {
   return (
     <div
-      className="header-notes"
-      style={{ display: 'flex', justifyContent: 'space-between',minHeight: '67px' }}
+      className={`header-notes ${className}`}
+      style={{
+        display: 'flex',
+        boxSizing: 'border-box',
+        justifyContent: 'space-between',
+        minHeight: '67px',
+      }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {activeBackButton && (
+      {activeBackButton && (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <ListItemButton
             sx={{
               borderRadius: '8px',
@@ -44,8 +54,8 @@ export default function Header({ children, activeBackButton = true }: IHeader) {
               <ArrowBackIosNewIcon fontSize="small" sx={{ fill: '#A4A4A4' }} />
             </Link>
           </ListItemButton>
-        )}
-      </Box>
+        </Box>
+      )}
       {children ? children : ''}
     </div>
   );

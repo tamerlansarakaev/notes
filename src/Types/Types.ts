@@ -25,3 +25,10 @@ export interface IRootReducer {
     loginStatus?: boolean;
   };
 }
+
+export interface IModalReducer {
+  modalReducer: {
+    modalStatus: boolean;
+    modalType: string;
+  };
+}

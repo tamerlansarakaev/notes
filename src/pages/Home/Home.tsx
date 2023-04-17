@@ -1,6 +1,11 @@
 // Global
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
+
+// Types
+import { IRootReducer } from '../../Types/Types';
 
 // MUI for App
 import { Box } from '@mui/material';
@@ -9,10 +14,12 @@ import { Box } from '@mui/material';
 import Header from '../../Components/Header/Header';
 import NotesList from '../../Components/NotesList/NotesList';
 
+// Icons
+import AddNotesIcon from '../../assets/headerIcons/addNoteIcon.svg';
+import ProfileIcon from '../../assets/headerIcons/profileIcon.svg';
+
 // Styles
-import './Home.scss';
-import { IRootReducer } from '../../Types/Types';
-import { useLocation, useNavigate } from 'react-router-dom';
+import headerClassNames from './Home.module.scss';
 
 function Home(): React.ReactElement {
   const navigate = useNavigate();
@@ -37,7 +44,10 @@ function Home(): React.ReactElement {
         minWidth: '100%',
       }}
     >
-      <Header activeBackButton={false} />
+      <Header activeBackButton={false} className={headerClassNames.header}>
+        <ReactSVG src={AddNotesIcon} className={headerClassNames.addNote} />
+        <ReactSVG src={ProfileIcon} className={headerClassNames.profileIcon} />
+      </Header>
       <NotesList />
     </Box>
   );

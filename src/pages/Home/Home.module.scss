@@ -1,0 +1,39 @@
+.header {
+  padding-top: 17px;
+}
+
+.addNote {
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: background 0.5s;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.addNote:hover {
+  cursor: pointer;
+  background: #7c7c7c30;
+}
+
+.addNote:active {
+  background: #494848;
+}
+
+.profileIcon {
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: background 0.5s;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.profileIcon:hover {
+  cursor: pointer;
+  background: #7c7c7c30;
+}
+
+.profileIcon:active {
+  background: #494848;
+}
