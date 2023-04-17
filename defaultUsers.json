@@ -1,9 +1,9 @@
 {
-  "test": {
-    "test": {
-      "title": "Test",
+  "users": [
+    {
       "id": 1,
-      "description": "Test Description"
+      "email": "admin@notes.com",
+      "notes": [{ "id": 0, "title": "Hello", "description": "Hello world" }]
     }
-  }
+  ]
 }

@@ -10,3 +10,18 @@ export interface INotesList {
   };
   changeNotes?: (e: INote) => void;
 }
+
+export interface IUser {
+  email?: string;
+  id?: string;
+  notes?: INote[];
+}
+
+export interface IRootReducer {
+  rootReducer: {
+    notes?: INote[];
+    user?: IUser;
+    authStatus?: 'Authorized' | 'Not Authorized' | '';
+    loginStatus?: boolean;
+  };
+}
