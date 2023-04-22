@@ -10,6 +10,7 @@
 .crossIcon {
   display: flex;
   max-height: 18px;
+  cursor: pointer;
   max-width: 18px;
   position: absolute;
   right: 40px;
@@ -20,4 +21,9 @@
     height: 100%;
     width: 100%;
   }
+}
+
+.modalBox {
+  display: flex;
+  padding: 245px 190px;
 }

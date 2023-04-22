@@ -1,26 +1,22 @@
 import { Box, Typography } from '@mui/material';
-import styles from './CustomModal.module.scss';
+
+// Styles
+import CustomModalStyles from './CustomModal.module.scss';
 
 type CustomModal = {
   children?: React.ReactNode;
   text?: string;
+  className?: string;
 };
 
-const CustomModal: React.FC<CustomModal> = ({ children, text }) => {
+const CustomModal: React.FC<CustomModal> = ({ children, text, className }) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#242424',
-        gap: '64px',
-        boxShadow: '0px 7px 11px rgba(0, 0, 0, 0.25)',
-        borderRadius: '20px',
-        padding: '60px 185px',
-      }}
+    <div
+      className={
+        className
+          ? `${className} ${CustomModalStyles.container}`
+          : CustomModalStyles.container
+      }
     >
       {text && (
         <Typography
@@ -41,7 +37,7 @@ const CustomModal: React.FC<CustomModal> = ({ children, text }) => {
         </Typography>
       )}
       {children}
-    </Box>
+    </div>
   );
 };
 
