@@ -28,7 +28,7 @@
   position: absolute;
   padding: 7px 22px;
   box-sizing: border-box;
-  right: 35px;
+  right: 23px;
   bottom: -87px;
   background: #282828;
   border-radius: 0px 0px 8px 8px;
@@ -36,20 +36,11 @@
 
 .profileIcon {
   display: flex;
-  padding: 10px;
-  box-sizing: border-box;
-  transition: background 0.5s;
-  border-radius: 8px;
   align-items: center;
-}
 
-.profileIcon:hover {
-  cursor: pointer;
-  background: #7c7c7c30;
-}
-
-.profileIcon:active {
-  background: #494848;
+  > div {
+    display: flex;
+  }
 }
 
 .profile {
@@ -59,5 +50,23 @@
 .button {
   display: flex;
   background: none;
+  align-items: center;
+  box-sizing: border-box;
+  transition: background 0.5s;
+  border-radius: 8px;
+  cursor: pointer;
   border: none;
+}
+
+.button:hover {
+  path {
+    fill: #fff;
+    transition: fill 0.5s ease-in-out;
+  }
+}
+
+.button:not(:active) {
+  path {
+    transition: fill 0.5s ease-in-out;
+  }
 }

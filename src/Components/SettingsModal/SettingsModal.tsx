@@ -25,6 +25,12 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
     dispatch(modalClose());
   }
 
+  React.useEffect(() => {
+    if (props.open) {
+      document.body.style.overflowY = 'hidden';
+    }
+  }, [props.open]);
+
   return (
     <Modal
       ref={ref}
