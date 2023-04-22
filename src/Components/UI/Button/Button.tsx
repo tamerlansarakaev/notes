@@ -9,19 +9,19 @@ interface IButton {
   className?: string;
 }
 
-export default function Button({
-  children,
-  onClick,
-  style,
-  className = 'button',
-}: IButton) {
-  return (
-    <button
-      style={style}
-      className={className}
-      onClick={(e) => onClick && onClick(e)}
-    >
-      {children}
-    </button>
-  );
-}
+const Button = React.forwardRef<HTMLButtonElement, IButton>(
+  ({ children, onClick, style, className = 'button' }, ref) => {
+    return (
+      <button
+        style={style}
+        className={className}
+        ref={ref}
+        onClick={(e) => onClick && onClick(e)}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+export default Button;

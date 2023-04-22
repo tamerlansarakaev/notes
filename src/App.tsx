@@ -27,6 +27,9 @@ function App(): React.ReactElement {
   const loginStatus = useSelector(
     (state: IRootReducer) => state.rootReducer.loginStatus
   );
+  const authStatus = useSelector(
+    (state: IRootReducer) => state.rootReducer.authStatus
+  );
 
   async function getData(): Promise<IUser | unknown> {
     const auth = getAuth(app);
@@ -78,7 +81,13 @@ function App(): React.ReactElement {
         return data;
       }
     });
-  }, [loginStatus]);
+  }, [loginStatus, authStatus]);
+
+  React.useEffect(() => {
+    if (authStatus) {
+      setStatusUserLogin(authStatus);
+    }
+  }, [authStatus]);
 
   return (
     <BrowserRouter>

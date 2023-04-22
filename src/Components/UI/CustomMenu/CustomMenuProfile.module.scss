@@ -1,0 +1,63 @@
+@keyframes smoothnessMenu {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.customMenu {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.menu {
+  display: flex;
+  max-width: 66px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation-name: smoothnessMenu;
+  animation-duration: 0.3s;
+  gap: 15px;
+  position: absolute;
+  padding: 7px 22px;
+  box-sizing: border-box;
+  right: 35px;
+  bottom: -87px;
+  background: #282828;
+  border-radius: 0px 0px 8px 8px;
+}
+
+.profileIcon {
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: background 0.5s;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.profileIcon:hover {
+  cursor: pointer;
+  background: #7c7c7c30;
+}
+
+.profileIcon:active {
+  background: #494848;
+}
+
+.profile {
+  position: relative;
+}
+
+.button {
+  display: flex;
+  background: none;
+  border: none;
+}
