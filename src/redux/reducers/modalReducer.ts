@@ -23,6 +23,7 @@ export const modalReducer = createReducer<IModalReducer>(
       })
       .addCase(modalClose, (state) => {
         state.modalStatus = false;
+        state.modalType = '';
       });
   }
 );

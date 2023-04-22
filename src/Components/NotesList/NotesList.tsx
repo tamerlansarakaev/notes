@@ -12,25 +12,21 @@ import NoteItem from '../NoteItem/NoteItem';
 import './NotesList.scss';
 
 export default function NotesList() {
+  const [statusNotes, setStatusNotes] = React.useState('Loading...');
   const [notes, setNotes] = React.useState<INote[]>();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
-  const all = useSelector((state: INotesList) => state.rootReducer);
-  const [statusNotes, setStatusNotes] = React.useState('Loading...');
+
   React.useEffect(() => {
     if (allNotes) {
       const newArray = [...allNotes];
       const sortNotes = newArray.sort((a, b) => (a.title > b.title ? 1 : -1));
       setNotes(sortNotes);
     }
-  }, [allNotes]);
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      if (!notes) {
-        setStatusNotes('Not found...');
-      }
-    }, 3000);
-  }, []);
+    if (!allNotes) {
+      setStatusNotes('Not found');
+    }
+  }, [allNotes]);
 
   return (
     <div className="notes-list">

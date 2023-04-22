@@ -8,7 +8,7 @@ import { ReactSVG } from 'react-svg';
 import { Box, Modal } from '@mui/material';
 
 // Types
-import { IRootReducer } from '../../Types/Types';
+import { IModalReducer, IRootReducer } from '../../Types/Types';
 
 // Components
 import Header from '../../Components/Header/Header';
@@ -26,13 +26,15 @@ import Button from '../../Components/UI/Button/Button';
 import { getAuth } from 'firebase/auth';
 import { signOutUser } from '../../redux/reducers/rootReducer';
 import SettingsModal from '../../Components/SettingsModal/SettingsModal';
+import { modalOpen } from '../../redux/reducers/modalReducer';
 
 function Home() {
-  const [openSettings, setOpenSettings] = React.useState<boolean>(false);
+  const openSettingsModal = useSelector(
+    (state: IModalReducer) => state.modalReducer
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
-  const settingsModalRef = React.useRef<HTMLDivElement>(null); // <-- specify the type
   const authStatus = useSelector(
     (state: IRootReducer) => state.rootReducer.authStatus
   );
@@ -43,6 +45,10 @@ function Home() {
     auth.signOut().then(() => {
       dispatch(signOutUser());
     });
+  }
+
+  function openModalSettings() {
+    dispatch(modalOpen({ modalType: 'SettingsModal', modalStatus: true }));
   }
 
   React.useEffect(() => {
@@ -67,7 +73,7 @@ function Home() {
         <CustomMenuProfile>
           <Button
             className={homeClassNames.menuButton}
-            onClick={() => setOpenSettings(!openSettings)}
+            onClick={openModalSettings}
           >
             <ReactSVG src={SettingsIcon} className={homeClassNames.menuIcon} />
           </Button>
@@ -80,9 +86,12 @@ function Home() {
         </CustomMenuProfile>
       </Header>
       <SettingsModal
-        onClose={() => setOpenSettings(!openSettings)}
-        open={openSettings}
-        ref={settingsModalRef}
+        open={
+          openSettingsModal.modalStatus &&
+          openSettingsModal.modalType === 'SettingsModal'
+            ? true
+            : false
+        }
       />
       <NotesList />
     </Box>

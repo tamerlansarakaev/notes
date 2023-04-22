@@ -1,7 +1,5 @@
 // Global
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { IModalReducer } from '../../Types/Types';
 import { ReactSVG } from 'react-svg';
 import { useDispatch } from 'react-redux';
 
@@ -14,16 +12,18 @@ import CrossIcon from './icon/cross.svg';
 
 // Styles
 import settingsClassNames from './SettingsModal.module.scss';
+import { modalClose } from '../../redux/reducers/modalReducer';
 
 type SettingsModal = {
   open: boolean;
-  onClose: (e: any) => void;
 };
 
 const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
-  const modalStatus = useSelector(
-    (state: IModalReducer) => state.modalReducer.modalStatus
-  );
+  const dispatch = useDispatch();
+
+  function closeModalSettings() {
+    dispatch(modalClose());
+  }
 
   return (
     <Modal
@@ -34,11 +34,15 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}
-      onClose={props.onClose}
+      onClose={closeModalSettings}
     >
       <div>
-        <CustomModal>
-          <ReactSVG src={CrossIcon} className={settingsClassNames.crossIcon} />
+        <CustomModal className={settingsClassNames.modalBox}>
+          <ReactSVG
+            src={CrossIcon}
+            className={settingsClassNames.crossIcon}
+            onClick={closeModalSettings}
+          />
           <span className={settingsClassNames.settings__title}>
             IN development
           </span>
