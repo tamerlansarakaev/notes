@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 
 // MUI for App
-import { Box, Modal } from '@mui/material';
+import { Box } from '@mui/material';
 
 // Types
 import { IModalReducer, IRootReducer } from '../../Types/Types';

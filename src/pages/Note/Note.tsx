@@ -38,7 +38,6 @@ function Note() {
     const filterNotes = allNotes.filter((noteFilter) => {
       return noteFilter.id !== note?.id;
     });
-
     const resultNotes = [...filterNotes, note];
     dispatch(changeNote(resultNotes));
   }, [note?.title, note?.description]);

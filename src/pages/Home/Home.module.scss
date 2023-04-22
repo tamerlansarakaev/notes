@@ -2,25 +2,40 @@
   z-index: 5;
   position: relative;
   box-sizing: border-box;
-  padding-top: 17px;
+  padding: 10px 35px;
 }
 
 .addNote {
   display: flex;
-  padding: 10px;
   box-sizing: border-box;
   transition: background 0.5s;
   border-radius: 8px;
   align-items: center;
+
+  > div {
+    display: flex;
+  }
 }
 
 .addNote:hover {
   cursor: pointer;
-  background: #7c7c7c30;
+  path {
+    fill: #fff;
+    transition: fill 0.5s ease-in-out;
+  }
 }
 
 .addNote:active {
-  background: #494848;
+  path {
+    fill: #fff;
+    transition: fill 0.5s ease-in-out;
+  }
+}
+
+.addNote:not(:active) {
+  path {
+    transition: fill 0.5s ease-in-out;
+  }
 }
 
 .menuButton {

@@ -1,3 +1,29 @@
+@keyframes infiniteColorText {
+  0% {
+    color: #7d7c7c;
+  }
+
+  20% {
+    color: #c7c7c7;
+  }
+
+  40% {
+    color: #f1efef;
+  }
+
+  60% {
+    color: #fff8f8;
+  }
+
+  80% {
+    color: #ffffff;
+  }
+
+  100% {
+    color: #7d7c7c;
+  }
+}
+
 .settings__title {
   font-weight: 600;
   font-size: 50px;
@@ -5,6 +31,7 @@
   font-family: 'Roboto';
   text-transform: uppercase;
   color: #b1b1b1;
+  animation: infiniteColorText 7s linear infinite;
 }
 
 .crossIcon {
