@@ -13,12 +13,16 @@ const initalState: IModalReducer = {
 export const modalOpen: any = createAction('modal/open');
 export const modalClose: any = createAction('modal/close');
 
-export const modalReducer = createReducer<IModalReducer>(initalState, {
-  [modalOpen]: (state: any, action: any) => {
-    state.modalStatus = action.payload.modalStatus;
-    state.modalType = action.payload.modalType;
-  },
-  [modalClose]: (state: any) => {
-    state.modalStatus = false;
-  },
-});
+export const modalReducer = createReducer<IModalReducer>(
+  initalState,
+  (builder) => {
+    builder
+      .addCase(modalOpen, (state, action) => {
+        state.modalStatus = action.payload.modalStatus;
+        state.modalType = action.payload.modalType;
+      })
+      .addCase(modalClose, (state) => {
+        state.modalStatus = false;
+      });
+  }
+);

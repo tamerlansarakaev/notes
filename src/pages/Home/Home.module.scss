@@ -1,4 +1,7 @@
 .header {
+  z-index: 5;
+  position: relative;
+  box-sizing: border-box;
   padding-top: 17px;
 }
 
@@ -20,20 +23,22 @@
   background: #494848;
 }
 
-.profileIcon {
+.menuButton {
   display: flex;
-  padding: 10px;
   box-sizing: border-box;
+  border: none;
+  padding: 5px;
+  background: none;
   transition: background 0.5s;
   border-radius: 8px;
   align-items: center;
 }
 
-.profileIcon:hover {
+.menuButton:hover {
   cursor: pointer;
   background: #7c7c7c30;
 }
 
-.profileIcon:active {
+.menuButton:active {
   background: #494848;
 }

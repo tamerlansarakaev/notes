@@ -6,7 +6,7 @@ import {
   TextareaAutosize,
   Typography,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Icons
 import UpperCaseIcon from '../../assets/upperCase.svg';
@@ -32,6 +32,7 @@ function Note() {
   const { id } = useParams();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const changeNotes = React.useCallback(async () => {
     const filterNotes = allNotes.filter((noteFilter) => {
@@ -58,6 +59,10 @@ function Note() {
   };
 
   React.useEffect(() => {
+    if (!findCurrentNote(allNotes, id)) {
+      navigate('/');
+    }
+
     if (allNotes && !note) {
       setNote(findCurrentNote(allNotes, id));
       setLoading(false);

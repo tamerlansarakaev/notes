@@ -39,6 +39,10 @@ const Login: React.FunctionComponent = () => {
     (state: IRootReducer) => state.rootReducer.loginStatus
   );
 
+  const authStatus = useSelector(
+    (state: IRootReducer) => state.rootReducer.authStatus
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -77,7 +81,7 @@ const Login: React.FunctionComponent = () => {
     if (loginStatus) {
       navigate('/');
     }
-  }, [loginStatus]);
+  }, [loginStatus, authStatus]);
 
   return (
     <Container

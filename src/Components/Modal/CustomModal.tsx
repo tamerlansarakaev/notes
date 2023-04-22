@@ -3,7 +3,7 @@ import styles from './CustomModal.module.scss';
 
 type CustomModal = {
   children?: React.ReactNode;
-  text: string;
+  text?: string;
 };
 
 const CustomModal: React.FC<CustomModal> = ({ children, text }) => {
@@ -12,6 +12,7 @@ const CustomModal: React.FC<CustomModal> = ({ children, text }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
         justifyContent: 'center',
         alignItems: 'center',
         background: '#242424',
@@ -21,22 +22,24 @@ const CustomModal: React.FC<CustomModal> = ({ children, text }) => {
         padding: '60px 185px',
       }}
     >
-      <Typography
-        component="span"
-        sx={{
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: 600,
-          fontSize: '30px',
-          lineHeight: '35px',
-          maxWidth: '327px',
-          textAlign: 'center',
-          textTransform: 'uppercase',
-          color: 'var(--whiteColor)',
-        }}
-      >
-        {text}
-      </Typography>
+      {text && (
+        <Typography
+          component="span"
+          sx={{
+            fontFamily: 'Roboto',
+            fontStyle: 'normal',
+            fontWeight: 600,
+            fontSize: '30px',
+            lineHeight: '35px',
+            maxWidth: '327px',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            color: 'var(--whiteColor)',
+          }}
+        >
+          {text}
+        </Typography>
+      )}
       {children}
     </Box>
   );
