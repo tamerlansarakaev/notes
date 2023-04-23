@@ -4,7 +4,3 @@
 
 
 # Login system in development, so maybe errors.
-
-Email and Password for Login page: 
-mail: admin@notes.com
-password: adminroot
