@@ -19,18 +19,23 @@ import './Notes.scss';
 
 // Other
 import { useDispatch, useSelector } from 'react-redux';
-import { INote, INotesList } from '../../Types/Types';
+import { INote, INotesList, IRootReducer } from '../../Types/Types';
 import Button from '../../Components/UI/Button/Button';
 import { changeNote } from '../../redux/reducers/rootReducer';
 import { ReactSVG } from 'react-svg';
-import { findCurrentNote } from '../../utils';
+import { findCurrentNote, writeDataNote } from '../../utils/utils';
 
 function Note() {
-  const [changeActive, setChangeActive] = React.useState<boolean>(false);
+  const [changeActive, setChangeActive] = React.useState({
+    type: '',
+    status: false,
+  });
   const [loading, setLoading] = React.useState<boolean>(true);
   const [note, setNote] = React.useState<INote>();
   const { id } = useParams();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
+  const user = useSelector((state: IRootReducer) => state.rootReducer.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,21 +45,19 @@ function Note() {
     });
     const resultNotes = [...filterNotes, note];
     dispatch(changeNote(resultNotes));
+    return resultNotes;
   }, [note?.title, note?.description]);
 
   const upperCaseNote = () => {
+    if (!note?.title) return;
     const upperCaseTitle = note?.title.toUpperCase();
     const upperCaseDescription = note?.description.toUpperCase();
 
-    setNote((note: any) => {
-      return {
-        ...note,
-        title: upperCaseTitle,
-        description: upperCaseDescription,
-      };
-    });
-
-    setChangeActive(true);
+    return {
+      title: upperCaseTitle,
+      description: upperCaseDescription,
+      id: note.id,
+    };
   };
 
   React.useEffect(() => {
@@ -69,10 +72,24 @@ function Note() {
   }, [allNotes]);
 
   React.useEffect(() => {
-    if (changeActive) {
-      changeNotes();
+    if (changeActive.status) {
+      changeNotes().then((notes: any) => {
+        writeDataNote(user?.id, notes);
+      });
     }
-  }, [note]);
+
+    if (changeActive.status && changeActive.type === 'UpperCase') {
+      const upperNote = upperCaseNote();
+      setNote(upperNote);
+      setChangeActive({ ...changeActive, type: '' });
+
+      setTimeout(() => {
+        setChangeActive({ ...changeActive, status: false });
+      }, 1000);
+    }
+
+    if (!changeActive.status) return;
+  }, [note, changeActive]);
 
   return (
     <Box
@@ -94,9 +111,12 @@ function Note() {
             borderRadius: '8px',
           }}
           disableRipple
-          onClick={() => upperCaseNote()}
+          onClick={() => setChangeActive({ type: 'UpperCase', status: true })}
           onBlur={() => {
-            setChangeActive(false);
+            setChangeActive({
+              type: 'UpperCase',
+              status: false,
+            });
           }}
         >
           <ReactSVG src={UpperCaseIcon} />
@@ -139,7 +159,9 @@ function Note() {
                 }}
               >
                 <span
-                  className={`note-page-status${changeActive ? '-active' : ''}`}
+                  className={`note-page-status${
+                    changeActive.status ? '-active' : ''
+                  }`}
                 >
                   Редактирование
                 </span>
@@ -156,13 +178,13 @@ function Note() {
                   name="title"
                   inputProps={{ maxLength: 50 }}
                   onChange={(e) => {
-                    setChangeActive(true);
+                    setChangeActive({ type: 'Update Note', status: true });
                     setNote((note: any) => {
                       return { ...note, title: e.target.value };
                     });
                   }}
                   onBlur={() => {
-                    setChangeActive(false);
+                    setChangeActive({ type: 'Update Note', status: false });
                   }}
                   placeholder="Write your Title"
                   disableUnderline
@@ -172,13 +194,13 @@ function Note() {
                   className="note-page-description"
                   name="description"
                   onChange={(e) => {
-                    setChangeActive(true);
+                    setChangeActive({ type: 'Update Note', status: true });
                     setNote((note: any) => {
                       return { ...note, description: e.target.value };
                     });
                   }}
                   onBlur={() => {
-                    setChangeActive(false);
+                    setChangeActive({ type: 'Update Note', status: false });
                   }}
                   placeholder="Write your description for the title"
                   value={note && note.description}
