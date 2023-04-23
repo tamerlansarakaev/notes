@@ -10,7 +10,7 @@ import 'firebase/auth';
 import { signInUser } from './redux/reducers/rootReducer';
 import app from './Api/api';
 import { IRootReducer, IUser } from './Types/Types';
-import { validateLoginStatus } from './utils';
+import { validateLoginStatus } from './utils/utils';
 
 // Pages for App
 import Home from './pages/Home/Home';
