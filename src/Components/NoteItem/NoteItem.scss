@@ -3,8 +3,10 @@
   flex-direction: column;
   font-family: Roboto;
   min-height: 250px;
-  max-width: 17%;
-  margin-bottom: 30px;
+  max-width: calc(calc(100% - calc(4 - 1) * 10%) / 4);
+  justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
   box-sizing: border-box;
   width: 100%;
 }
@@ -31,18 +33,18 @@
   border-color: #fab906;
 }
 
-.note-title {
+.note-box-title {
   font-weight: 600;
 }
 
 .note-end-text {
   text-align: center;
-  margin-top: 10px;
   font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .note-end-time {
-  margin-top: 5px;
   text-align: center;
   font-weight: 500;
 }
@@ -51,7 +53,31 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
-  height: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  height: 100%;
+  word-wrap: break-word;
+
+  .note-box-description {
+    width: 100%;
+    white-space: pre-wrap;
+    height: 84%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .note-item {
+    max-width: calc(calc(100% - calc(3 - 1) * 10%) / 3);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .note-item {
+    max-width: calc(calc(100% - calc(2 - 1) * 10%) / 2);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .note-item {
+    max-width: 100%;
+  }
 }

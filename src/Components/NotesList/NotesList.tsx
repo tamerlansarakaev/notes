@@ -17,17 +17,16 @@ export default function NotesList() {
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
 
   React.useEffect(() => {
-    if (allNotes) {
+    if (allNotes.length) {
       const newArray = [...allNotes];
       const sortNotes = newArray.sort((a, b) => (a.title > b.title ? 1 : -1));
       setNotes(allNotes);
     }
 
-    if (!allNotes) {
-      setStatusNotes('Not found');
-    }
+    setTimeout(() => {
+      setStatusNotes('Not have the notes')
+    },3000)
   }, [allNotes]);
-
   return (
     <div className="notes-list">
       {notes &&
