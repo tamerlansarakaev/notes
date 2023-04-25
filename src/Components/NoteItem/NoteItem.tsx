@@ -18,7 +18,6 @@ export default function NoteItem({ title, description, id }: INote) {
           </div>
         </Link>
         <span className="note-end-text">{title}</span>
-        <span className="note-end-time">16:59</span>
       </div>
     </>
   );
