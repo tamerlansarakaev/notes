@@ -4,7 +4,7 @@
   font-family: Roboto;
   min-height: 250px;
   max-width: calc(calc(100% - calc(4 - 1) * 10%) / 4);
-  justify-content: space-between;
+  gap: 10px;
   white-space: nowrap;
   overflow: hidden;
   box-sizing: border-box;
