@@ -8,7 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import app from '../../Api/api';
 
 // Redux
-import { signedIn } from '../../redux/reducers/rootReducer';
+import { logIn } from '../../redux/reducers/rootReducer';
 import { IModalReducer, IRootReducer } from '../../Types/Types';
 import { modalClose, modalOpen } from '../../redux/reducers/modalReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ import { types } from '../../redux/types';
 
 // Components
 import Button from '../../Components/UI/Button/Button';
-import CustomModal from '../../Components/Modal/CustomModal';
+import CustomModal from '../../Components/CustomModal/CustomModal';
 
 // Styles
 import classNames from './Login.module.scss';
@@ -60,7 +60,7 @@ const Login: React.FunctionComponent = () => {
         formState.mail,
         formState.password
       );
-      dispatch(signedIn({ loginStatus: true }));
+      dispatch(logIn({ loginStatus: true }));
       return loginUser;
     } catch (err) {
       dispatch(
@@ -156,6 +156,14 @@ const Login: React.FunctionComponent = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+        }}
+        slotProps={{
+          backdrop: {
+            style: {
+              background: 'rgba(26, 26, 26, 0.5)',
+              backdropFilter: 'blur(5.5px)',
+            },
+          },
         }}
       >
         <div>

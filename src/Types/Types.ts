@@ -14,7 +14,7 @@ export interface INotesList {
 export interface IUser {
   email?: string;
   id?: string;
-  notes?: INote[];
+  notes?: INote[] | any;
 }
 
 export interface IRootReducer {
@@ -23,6 +23,7 @@ export interface IRootReducer {
     user?: IUser;
     authStatus?: 'Authorized' | 'Not Authorized' | '';
     loginStatus?: boolean;
+    update: boolean;
   };
 }
 

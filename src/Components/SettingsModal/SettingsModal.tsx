@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 // Components
 import { Modal } from '@mui/material';
-import CustomModal from '../Modal/CustomModal';
+import CustomModal from '../CustomModal/CustomModal';
 
 // Icon
 import CrossIcon from './icon/cross.svg';
@@ -28,6 +28,8 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
   React.useEffect(() => {
     if (props.open) {
       document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'auto'
     }
   }, [props.open]);
 
@@ -39,6 +41,14 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+      }}
+      slotProps={{
+        backdrop: {
+          style: {
+            background: 'rgba(26, 26, 26, 0.5)',
+            backdropFilter: 'blur(5.5px)',
+          },
+        },
       }}
       onClose={closeModalSettings}
     >

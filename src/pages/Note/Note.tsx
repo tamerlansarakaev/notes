@@ -3,8 +3,10 @@ import {
   Box,
   Input,
   ListItemButton,
+  Modal,
   TextareaAutosize,
   Typography,
+  debounce,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -13,25 +15,32 @@ import UpperCaseIcon from '../../assets/upperCase.svg';
 
 // Components
 import Header from '../../Components/Header/Header';
+import Button from '../../Components/UI/Button/Button';
+import CustomModal from '../../Components/CustomModal/CustomModal';
 
 // Styles
-import './Notes.scss';
+import NoteClassNames from './Note.module.scss';
 
 // Other
 import { useDispatch, useSelector } from 'react-redux';
 import { INote, INotesList, IRootReducer } from '../../Types/Types';
-import Button from '../../Components/UI/Button/Button';
-import { changeNote } from '../../redux/reducers/rootReducer';
+import { changeNote, updateData } from '../../redux/reducers/rootReducer';
 import { ReactSVG } from 'react-svg';
-import { findCurrentNote, writeDataNote } from '../../utils/utils';
+import {
+  deleteNote,
+  findCurrentNote,
+  upperCaseNote,
+  writeDataNote,
+} from '../../utils/utils';
 
 function Note() {
   const [changeActive, setChangeActive] = React.useState({
     type: '',
     status: false,
   });
+  const [modalActive, setModalActive] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [note, setNote] = React.useState<INote>();
+  const [note, setNote] = React.useState<INote | null>();
   const { id } = useParams();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
   const user = useSelector((state: IRootReducer) => state.rootReducer.user);
@@ -48,48 +57,44 @@ function Note() {
     return resultNotes;
   }, [note?.title, note?.description]);
 
-  const upperCaseNote = () => {
-    if (!note?.title) return;
-    const upperCaseTitle = note?.title.toUpperCase();
-    const upperCaseDescription = note?.description.toUpperCase();
+  React.useEffect(() => {
+    if (!changeActive.status) return;
+    if (changeActive.status && changeActive.type !== 'DELETE') {
+      changeNotes().then(
+        debounce((notes: any) => {
+          writeDataNote(user?.id, notes);
+        }, 500)
+      );
+    }
 
-    return {
-      title: upperCaseTitle,
-      description: upperCaseDescription,
-      id: note.id,
-    };
-  };
+    const userId = user?.id?.toString();
+
+    if (note?.id.toString() && changeActive.type === 'DELETE') {
+      const noteId = note.id.toString();
+      deleteNote(userId, noteId).then(dispatch(updateData()));
+    }
+
+    if (changeActive.status && changeActive.type === 'UpperCase') {
+      if (!note) return;
+      const upperNote = upperCaseNote(note);
+      setNote(upperNote);
+      setChangeActive({ ...changeActive, type: '' });
+      setTimeout(() => {
+        setChangeActive({ ...changeActive, status: false });
+      }, 1000);
+    }
+  }, [changeActive]);
 
   React.useEffect(() => {
     if (!findCurrentNote(allNotes, id)) {
       navigate('/');
     }
 
-    if (allNotes && !note) {
+    if (allNotes && !changeActive.status) {
       setNote(findCurrentNote(allNotes, id));
       setLoading(false);
     }
   }, [allNotes]);
-
-  React.useEffect(() => {
-    if (changeActive.status) {
-      changeNotes().then((notes: any) => {
-        writeDataNote(user?.id, notes);
-      });
-    }
-
-    if (changeActive.status && changeActive.type === 'UpperCase') {
-      const upperNote = upperCaseNote();
-      setNote(upperNote);
-      setChangeActive({ ...changeActive, type: '' });
-
-      setTimeout(() => {
-        setChangeActive({ ...changeActive, status: false });
-      }, 1000);
-    }
-
-    if (!changeActive.status) return;
-  }, [note, changeActive]);
 
   return (
     <Box
@@ -122,7 +127,7 @@ function Note() {
           <ReactSVG src={UpperCaseIcon} />
         </ListItemButton>
         <Box sx={{ margin: 'auto 0' }}>
-          <Button>Удалить</Button>
+          <Button onClick={() => setModalActive(true)}>Удалить</Button>
         </Box>
       </Header>
       {!loading ? (
@@ -130,7 +135,6 @@ function Note() {
           <Box
             sx={{
               display: 'flex',
-              marginTop: '14px',
               flexDirection: 'column',
               gap: '20px',
               textAlign: 'start',
@@ -143,7 +147,7 @@ function Note() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                maxWidth: '1704px',
+                maxWidth: '90%',
               }}
             >
               <Typography
@@ -159,22 +163,24 @@ function Note() {
                 }}
               >
                 <span
-                  className={`note-page-status${
-                    changeActive.status ? '-active' : ''
-                  }`}
+                  className={
+                    !changeActive.status
+                      ? NoteClassNames.notePageStatus
+                      : NoteClassNames.notePageStatusActive
+                  }
                 >
                   Редактирование
                 </span>
               </Typography>
               <form
-                className="note-page-form"
+                className={NoteClassNames.notePageForm}
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}
               >
                 <Input
                   type="text"
-                  className="note-page-title"
+                  className={NoteClassNames.title}
                   name="title"
                   inputProps={{ maxLength: 50 }}
                   onChange={(e) => {
@@ -191,7 +197,8 @@ function Note() {
                   value={note && note.title}
                 />
                 <TextareaAutosize
-                  className="note-page-description"
+                  maxLength={10000}
+                  className={NoteClassNames.description}
                   name="description"
                   onChange={(e) => {
                     setChangeActive({ type: 'Update Note', status: true });
@@ -202,8 +209,12 @@ function Note() {
                   onBlur={() => {
                     setChangeActive({ type: 'Update Note', status: false });
                   }}
+                  style={{
+                    minHeight: '500px',
+                    width: '100%',
+                  }}
                   placeholder="Write your description for the title"
-                  value={note && note.description}
+                  value={note?.description && note.description}
                 />
               </form>
             </Box>
@@ -212,6 +223,51 @@ function Note() {
       ) : (
         <h1 style={{ marginLeft: '35px', fontFamily: 'Roboto' }}>Loading...</h1>
       )}
+      <Modal
+        open={modalActive}
+        onClose={() => setModalActive(false)}
+        className={NoteClassNames.modal}
+        slotProps={{
+          backdrop: {
+            style: {
+              background: 'rgba(26, 26, 26, 0.5)',
+              backdropFilter: 'blur(5.5px)',
+            },
+          },
+        }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div>
+          <CustomModal
+            text="Confirm note deletion"
+            className={NoteClassNames.deleteModal}
+          >
+            <div className={NoteClassNames.modalActions}>
+              <Button
+                className={NoteClassNames.modalCanselDeleteButton}
+                onClick={() => setModalActive(false)}
+              >
+                Cansel
+              </Button>
+              <Button
+                className={NoteClassNames.modalConfirmDeleteButton}
+                onClick={() =>
+                  setChangeActive({
+                    type: 'DELETE',
+                    status: true,
+                  })
+                }
+              >
+                confirm
+              </Button>
+            </div>
+          </CustomModal>
+        </div>
+      </Modal>
     </Box>
   );
 }

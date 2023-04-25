@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Button.scss';
+import ButtonClassNames from './Button.module.scss';
 
 interface IButton {
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -10,11 +10,11 @@ interface IButton {
 }
 
 const Button = React.forwardRef<HTMLButtonElement, IButton>(
-  ({ children, onClick, style, className = 'button' }, ref) => {
+  ({ children, onClick, style, className = '' }, ref) => {
     return (
       <button
         style={style}
-        className={className}
+        className={className ? className : ButtonClassNames.button}
         ref={ref}
         onClick={(e) => onClick && onClick(e)}
       >
