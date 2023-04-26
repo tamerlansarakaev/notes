@@ -21,6 +21,17 @@
   }
 }
 
+.header {
+  display: flex;
+  justify-content: space-between !important;
+
+  .upperCaseIcon {
+    > div {
+      display: flex;
+    }
+  }
+}
+
 .notePageForm {
   display: flex;
   flex-direction: column;
@@ -28,7 +39,7 @@
 
 .description {
   font-weight: 400;
-  font-size: 30px;
+  font-size: 30px !important;
   font-family: 'Roboto';
   max-width: 100%;
   min-width: 50%;
@@ -76,70 +87,86 @@
   background: #181818;
   padding: 43px 165px;
   gap: 50px;
-}
 
-.deleteModal > span {
-  max-width: none;
-}
+  span {
+    max-width: none;
+  }
 
-.modalActions {
-  display: flex;
-  gap: 41px;
-  box-sizing: border-box;
-}
+  .modalActions {
+    display: flex;
+    gap: 41px;
+    box-sizing: border-box;
+  }
 
-.modalCanselDeleteButton {
-  background: var(--grayColor);
-  transition: background 0.5s;
-  border-radius: 4px;
-  color: var(--whiteColor);
-  padding: 14px 44px;
-  box-sizing: border-box;
-  border: none;
-  cursor: pointer;
+  .modalCanselDeleteButton {
+    background: var(--grayColor);
+    transition: background 0.5s;
+    border-radius: 4px;
+    color: var(--whiteColor);
+    padding: 14px 44px;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
 
-  font-family: 'Roboto';
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 23px;
-  text-transform: uppercase;
-}
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-transform: uppercase;
+  }
 
-.modalConfirmDeleteButton {
-  background: var(--redDarkColor);
-  transition: background 0.5s;
-  box-sizing: border-box;
-  border-radius: 4px;
-  color: var(--whiteColor);
-  padding: 14px 44px;
-  border: none;
-  cursor: pointer;
+  .modalConfirmDeleteButton {
+    background: var(--redDarkColor);
+    transition: background 0.5s;
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: var(--whiteColor);
+    padding: 14px 44px;
+    border: none;
+    cursor: pointer;
 
-  font-family: 'Roboto';
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 23px;
-  text-transform: uppercase;
-}
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-transform: uppercase;
+  }
 
-.modalConfirmDeleteButton:hover {
-  background: var(--redDarkColorHover);
-}
+  .modalConfirmDeleteButton:hover {
+    background: var(--redDarkColorHover);
+  }
 
-.modalConfirmDeleteButton:active {
-  background: var(--redDarkColorActive);
-}
+  .modalConfirmDeleteButton:active {
+    background: var(--redDarkColorActive);
+  }
 
-.modalCanselDeleteButton:hover {
-  background: var(--grayColorHover);
-}
+  .modalCanselDeleteButton:hover {
+    background: var(--grayColorHover);
+  }
 
-.modalCanselDeleteButton:active {
-  background: var(--grayColorActive);
+  .modalCanselDeleteButton:active {
+    background: var(--grayColorActive);
+  }
 }
 
 .modal {
   .backdrop {
     background: #fff;
+  }
+}
+
+// Adaptive
+
+@media screen and (max-width: 425px) {
+  .header {
+    padding: 10px !important;
+  }
+
+  .title {
+    font-size: 30px !important;
+  }
+
+  .description {
+    font-size: 20px !important;
   }
 }

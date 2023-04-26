@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import 'firebase/auth';
 
 // Other
-import { signInUser } from './redux/reducers/rootReducer';
-import app from './Api/api';
+import { signInUser, signOutUser } from './redux/reducers/rootReducer';
 import { INote, IRootReducer, IUser } from './Types/Types';
 import { validateLoginStatus } from './utils/utils';
 
@@ -34,29 +33,30 @@ function App(): React.ReactElement {
     (state: IRootReducer) => state.rootReducer.authStatus
   );
 
-  async function getData(): Promise<IUser | null> {
+  async function getData(): Promise<IUser | null | undefined> {
     const auth = getAuth();
     const validateUser = await validateLoginStatus(auth);
+    if (!validateUser) {
+      dispatch(signOutUser());
+    }
     const db = getDatabase();
     const starCountRef = ref(db, '/users');
 
-    if (!validateUser) {
-      return null;
-    }
-
     try {
-      const snapshot = await get(starCountRef);
-      const data = snapshot.val();
-      const userArray = Object.values(data);
+      if (validateUser?.email) {
+        const snapshot = await get(starCountRef);
+        const data = snapshot.val();
+        const userArray = Object.values(data);
+        const result: any = userArray.find((user: any) => {
+          return validateUser.email === user.email;
+        });
 
-      const result: any = userArray.find((user: any) => {
-        return validateUser.email === user.email;
-      });
-
-      return result;
+        return result;
+      }
     } catch (error) {
       return null;
     }
+    return;
   }
 
   React.useEffect(() => {
@@ -65,8 +65,8 @@ function App(): React.ReactElement {
         const data: any = await getData();
         return data;
       };
-
       setData().then((data: IUser) => {
+        if (!data) return;
         let notesList: INote[] = [];
         if (data.notes) {
           const inArray: INote[] = Object.values(data.notes);

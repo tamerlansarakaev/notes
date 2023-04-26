@@ -36,6 +36,7 @@ export const rootReducer: any = createReducer(initialState, (builder) => {
 
     .addCase(logIn, (state: RootReducer, action: any) => {
       state.loginStatus = action.loginStatus;
+      state.update = true;
     })
     .addCase(signOutUser, (state: RootReducer) => {
       state.authStatus = 'Not Authorized';

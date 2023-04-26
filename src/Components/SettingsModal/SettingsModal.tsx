@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 // Components
 import { Modal } from '@mui/material';
-import CustomModal from '../CustomModal/CustomModal';
+import CustomModalBox from '../CustomModalBox/CustomModalBox';
 
 // Icon
 import CrossIcon from './icon/cross.svg';
@@ -29,7 +29,7 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
     if (props.open) {
       document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflowY = 'auto'
+      document.body.style.overflowY = 'auto';
     }
   }, [props.open]);
 
@@ -40,30 +40,32 @@ const SettingsModal = React.forwardRef((props: SettingsModal, ref: any) => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        zIndex: '50',
+        overflowY: 'auto',
         alignItems: 'center',
       }}
       slotProps={{
         backdrop: {
           style: {
             background: 'rgba(26, 26, 26, 0.5)',
-            backdropFilter: 'blur(5.5px)',
           },
         },
       }}
+      className={settingsClassNames.modal}
       onClose={closeModalSettings}
     >
-      <div>
-        <CustomModal className={settingsClassNames.modalBox}>
-          <ReactSVG
-            src={CrossIcon}
-            className={settingsClassNames.crossIcon}
-            onClick={closeModalSettings}
-          />
-          <span className={settingsClassNames.settings__title}>
-            IN development
-          </span>
-        </CustomModal>
-      </div>
+      <CustomModalBox className={settingsClassNames.modalBox}>
+        <ReactSVG
+          src={CrossIcon}
+          className={settingsClassNames.crossIcon}
+          onClick={closeModalSettings}
+        />
+        <span className={settingsClassNames.settings__title}>
+          IN development
+        </span>
+      </CustomModalBox>
     </Modal>
   );
 });

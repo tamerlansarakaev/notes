@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 
 // MUI for App
-import { Box } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 
 // Types
 import { IModalReducer, IRootReducer } from '../../Types/Types';
@@ -26,12 +26,12 @@ import Button from '../../Components/UI/Button/Button';
 import { getAuth } from 'firebase/auth';
 import { signOutUser } from '../../redux/reducers/rootReducer';
 import SettingsModal from '../../Components/SettingsModal/SettingsModal';
-import { modalOpen } from '../../redux/reducers/modalReducer';
+import { modalClose, modalOpen } from '../../redux/reducers/modalReducer';
+import CreateNote from '../../Components/CreateNote/CreateNote';
+import { types } from '../../redux/types';
 
 function Home() {
-  const openSettingsModal = useSelector(
-    (state: IModalReducer) => state.modalReducer
-  );
+  const modalStatus = useSelector((state: IModalReducer) => state.modalReducer);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,6 +49,10 @@ function Home() {
 
   function openModalSettings() {
     dispatch(modalOpen({ modalType: 'SettingsModal', modalStatus: true }));
+  }
+
+  function openCreateModal() {
+    dispatch(modalOpen({ modalType: types.CREATE_MODAL, modalStatus: true }));
   }
 
   React.useEffect(() => {
@@ -69,7 +73,11 @@ function Home() {
       }}
     >
       <Header activeBackButton={false} className={homeClassNames.header}>
-        <ReactSVG src={AddNotesIcon} className={homeClassNames.addNote} />
+        <ReactSVG
+          src={AddNotesIcon}
+          className={homeClassNames.addNote}
+          onClick={() => openCreateModal()}
+        />
         <CustomMenuProfile>
           <Button
             className={homeClassNames.menuButton}
@@ -87,12 +95,36 @@ function Home() {
       </Header>
       <SettingsModal
         open={
-          openSettingsModal.modalStatus &&
-          openSettingsModal.modalType === 'SettingsModal'
+          modalStatus.modalStatus && modalStatus.modalType === 'SettingsModal'
             ? true
             : false
         }
       />
+      <Modal
+        open={
+          modalStatus.modalStatus &&
+          modalStatus.modalType === types.CREATE_MODAL
+            ? true
+            : false
+        }
+        onClose={() => dispatch(modalClose())}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+        }}
+        slotProps={{
+          backdrop: {
+            style: {
+              background: 'rgba(26, 26, 26, 0.5)',
+              backdropFilter: 'blur(15px)',
+            },
+          },
+        }}
+      >
+        <CreateNote />
+      </Modal>
       <NotesList />
     </Box>
   );
