@@ -24,10 +24,13 @@
   }
 }
 
+.modal {
+  padding: 1% !important;
+}
+
 .settings__title {
   font-weight: 600;
   font-size: 50px;
-  line-height: 59px;
   font-family: 'Roboto';
   text-transform: uppercase;
   color: #b1b1b1;
@@ -52,5 +55,37 @@
 
 .modalBox {
   display: flex;
-  padding: 245px 190px;
+  padding: 15% 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    padding: 1% !important;
+  }
+
+  .modalBox {
+    padding: 20%;
+    .settings__title {
+      font-size: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .modal {
+    padding: 1% !important;
+  }
+
+  .modalBox {
+    padding: 15%;
+    .settings__title {
+      font-size: 30px;
+    }
+
+    .crossIcon {
+      width: 15px;
+      top: 20px;
+      right: 20px;
+    }
+  }
 }

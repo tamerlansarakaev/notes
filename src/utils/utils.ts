@@ -2,6 +2,7 @@ import { Auth } from 'firebase/auth';
 import { INote, IUser } from '../Types/Types';
 import { getDatabase, ref, remove, set } from 'firebase/database';
 import { debounce } from '@mui/material';
+import { INewNote } from '../Components/CreateNote/CreateNote';
 
 export const findCurrentNote = (notes: INote[], id: string | undefined) => {
   try {
@@ -59,4 +60,9 @@ export const upperCaseNote = (note: INote) => {
     description: upperCaseDescription,
     id: note.id,
   };
+};
+
+export const createNote = async (note: INewNote, userId: string) => {
+  const db = getDatabase();
+  set(ref(db, `/users/${userId}/notes/${note.id}`), { ...note });
 };

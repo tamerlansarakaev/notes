@@ -2,58 +2,58 @@
   z-index: 5;
   position: relative;
   box-sizing: border-box;
-  padding: 10px 35px;
-}
+  padding: 1% 2%;
 
-.addNote {
-  display: flex;
-  box-sizing: border-box;
-  transition: background 0.5s;
-  border-radius: 8px;
-  align-items: center;
-
-  > div {
+  .addNote {
     display: flex;
+    box-sizing: border-box;
+    transition: background 0.5s;
+    border-radius: 8px;
+    align-items: center;
+
+    > div {
+      display: flex;
+    }
   }
-}
 
-.addNote:hover {
-  cursor: pointer;
-  path {
-    fill: #fff;
-    transition: fill 0.5s ease-in-out;
+  .addNote:hover {
+    cursor: pointer;
+    path {
+      fill: #fff;
+      transition: fill 0.5s ease-in-out;
+    }
   }
-}
 
-.addNote:active {
-  path {
-    fill: #fff;
-    transition: fill 0.5s ease-in-out;
+  .addNote:active {
+    path {
+      fill: #fff;
+      transition: fill 0.5s ease-in-out;
+    }
   }
-}
 
-.addNote:not(:active) {
-  path {
-    transition: fill 0.5s ease-in-out;
+  .addNote:not(:active) {
+    path {
+      transition: fill 0.5s ease-in-out;
+    }
   }
-}
 
-.menuButton {
-  display: flex;
-  box-sizing: border-box;
-  border: none;
-  padding: 5px;
-  background: none;
-  transition: background 0.5s;
-  border-radius: 8px;
-  align-items: center;
-}
+  .menuButton {
+    display: flex;
+    box-sizing: border-box;
+    border: none;
+    padding: 5px;
+    background: none;
+    transition: background 0.5s;
+    border-radius: 8px;
+    align-items: center;
+  }
 
-.menuButton:hover {
-  cursor: pointer;
-  background: #7c7c7c30;
-}
+  .menuButton:hover {
+    cursor: pointer;
+    background: #7c7c7c30;
+  }
 
-.menuButton:active {
-  background: #494848;
+  .menuButton:active {
+    background: #494848;
+  }
 }

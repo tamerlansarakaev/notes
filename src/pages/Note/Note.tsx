@@ -16,7 +16,7 @@ import UpperCaseIcon from '../../assets/upperCase.svg';
 // Components
 import Header from '../../Components/Header/Header';
 import Button from '../../Components/UI/Button/Button';
-import CustomModal from '../../Components/CustomModal/CustomModal';
+import CustomModal from '../../Components/CustomModalBox/CustomModalBox';
 
 // Styles
 import NoteClassNames from './Note.module.scss';
@@ -105,15 +105,13 @@ function Note() {
         minWidth: '100%',
       }}
     >
-      <Header>
+      <Header className={NoteClassNames.header}>
         <ListItemButton
           sx={{
-            display: 'flex',
-            maxWidth: '41px',
-            alignItems: 'center',
-            justifyContent: 'center',
             boxSizing: 'border-box',
+            maxWidth: '41px',
             borderRadius: '8px',
+            padding: 0,
           }}
           disableRipple
           onClick={() => setChangeActive({ type: 'UpperCase', status: true })}
@@ -124,11 +122,12 @@ function Note() {
             });
           }}
         >
-          <ReactSVG src={UpperCaseIcon} />
+          <ReactSVG
+            src={UpperCaseIcon}
+            className={NoteClassNames.upperCaseIcon}
+          />
         </ListItemButton>
-        <Box sx={{ margin: 'auto 0' }}>
-          <Button onClick={() => setModalActive(true)}>Удалить</Button>
-        </Box>
+        <Button onClick={() => setModalActive(true)}>Удалить</Button>
       </Header>
       {!loading ? (
         <>
@@ -197,7 +196,7 @@ function Note() {
                   value={note && note.title}
                 />
                 <TextareaAutosize
-                  maxLength={10000}
+                  maxLength={3000}
                   className={NoteClassNames.description}
                   name="description"
                   onChange={(e) => {

@@ -18,7 +18,7 @@ import { types } from '../../redux/types';
 
 // Components
 import Button from '../../Components/UI/Button/Button';
-import CustomModal from '../../Components/CustomModal/CustomModal';
+import CustomModalBox from '../../Components/CustomModalBox/CustomModalBox';
 
 // Styles
 import classNames from './Login.module.scss';
@@ -167,14 +167,14 @@ const Login: React.FunctionComponent = () => {
         }}
       >
         <div>
-          <CustomModal text="Write correct Login and Password ">
+          <CustomModalBox text="Write correct Login and Password ">
             <Button
               className={buttonClassNames.blackLightButton}
               onClick={() => closeModal()}
             >
               Close
             </Button>
-          </CustomModal>
+          </CustomModalBox>
         </div>
       </Modal>
     </Container>
