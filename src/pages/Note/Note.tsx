@@ -44,10 +44,8 @@ function Note() {
   const { id } = useParams();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
   const user = useSelector((state: IRootReducer) => state.rootReducer.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const changeNotes = React.useCallback(async () => {
     const filterNotes = allNotes.filter((noteFilter) => {
       return noteFilter.id !== note?.id;
@@ -60,9 +58,10 @@ function Note() {
   React.useEffect(() => {
     if (!changeActive.status) return;
     if (changeActive.status && changeActive.type !== 'DELETE') {
+      if (!note) return;
       changeNotes().then(
-        debounce((notes: any) => {
-          writeDataNote(user?.id, notes);
+        debounce(() => {
+          writeDataNote(user?.id, note);
         }, 500)
       );
     }
@@ -127,7 +126,12 @@ function Note() {
             className={NoteClassNames.upperCaseIcon}
           />
         </ListItemButton>
-        <Button onClick={() => setModalActive(true)} className={NoteClassNames.deleteButton}>Delete</Button>
+        <Button
+          onClick={() => setModalActive(true)}
+          className={NoteClassNames.deleteButton}
+        >
+          Delete
+        </Button>
       </Header>
       {!loading ? (
         <>
@@ -188,7 +192,7 @@ function Note() {
                       return {
                         ...note,
                         title: e.target.value,
-                        date: new Date(),
+                        date: new Date().getTime(),
                       };
                     });
                   }}

@@ -20,7 +20,7 @@ export default function NotesList() {
     if (allNotes.length) {
       const newArray: any = [...allNotes];
       const sortNotes = newArray.sort((a: any, b: any) => {
-        return a.date > b.date ? 1 : -1;
+        return b.date > a.date ? 1 : -1;
       });
       setNotes(sortNotes);
     }

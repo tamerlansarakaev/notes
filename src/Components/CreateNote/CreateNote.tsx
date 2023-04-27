@@ -65,9 +65,7 @@ const CreateNote = React.forwardRef((_, ref) => {
       </div>
       <form
         className={CreateNoteClassNames.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
+        onSubmit={() => handleSubmit()}
       >
         <fieldset
           style={{
@@ -85,7 +83,7 @@ const CreateNote = React.forwardRef((_, ref) => {
             onChange={(e) => {
               setNote({ ...note, title: e.target.value });
             }}
-            minLength={10}
+            minLength={5}
             value={note.title}
             maxLength={50}
             required
@@ -103,7 +101,6 @@ const CreateNote = React.forwardRef((_, ref) => {
           <Button
             type="submit"
             className={CreateNoteClassNames.button}
-            onClick={() => handleSubmit()}
           >
             create
           </Button>
