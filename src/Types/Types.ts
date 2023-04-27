@@ -2,7 +2,7 @@ export interface INote {
   id: string | number;
   title: string;
   description: string;
-  date?: number;
+  date?: number ;
 }
 
 export interface INotesList {

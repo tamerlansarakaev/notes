@@ -18,9 +18,11 @@ export default function NotesList() {
 
   React.useEffect(() => {
     if (allNotes.length) {
-      const newArray = [...allNotes];
-      const sortNotes = newArray.sort((a, b) => (a.title > b.title ? 1 : -1));
-      setNotes(allNotes);
+      const newArray: any = [...allNotes];
+      const sortNotes = newArray.sort((a: any, b: any) => {
+        return a.date > b.date ? 1 : -1;
+      });
+      setNotes(sortNotes);
     }
 
     setTimeout(() => {
