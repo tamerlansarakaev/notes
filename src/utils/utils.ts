@@ -34,9 +34,9 @@ export const validateLoginStatus = (auth: Auth): Promise<IUser | null> => {
   });
 };
 
-export const writeDataNote = debounce((userId: any, notes: INote[]) => {
+export const writeDataNote = debounce((userId: any, note: INote) => {
   const db = getDatabase();
-  set(ref(db, `/users/${userId}/notes`), { ...notes });
+  set(ref(db, `/users/${userId}/notes/${note.id}`), { ...note });
 }, 100);
 
 export const deleteNote = async (userId: any, noteId: string | number) => {
@@ -45,6 +45,7 @@ export const deleteNote = async (userId: any, noteId: string | number) => {
     const deleteNote = await remove(
       ref(db, `/users/${userId}/notes/${noteId}`)
     );
+    console.log(noteId);
     return deleteNote;
   } catch (err) {
     return err;
@@ -59,6 +60,7 @@ export const upperCaseNote = (note: INote) => {
     title: upperCaseTitle,
     description: upperCaseDescription,
     id: note.id,
+    date: note.date,
   };
 };
 
