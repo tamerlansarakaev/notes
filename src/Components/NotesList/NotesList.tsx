@@ -24,8 +24,8 @@ export default function NotesList() {
     }
 
     setTimeout(() => {
-      setStatusNotes('Not have the notes')
-    },3000)
+      setStatusNotes('Not have the notes');
+    }, 3000);
   }, [allNotes]);
   return (
     <div className="notes-list">
