@@ -17,8 +17,8 @@ export default function NoteItem({ title, description, id, date }: INote) {
     const year = date.getFullYear();
     const hours = date.getHours();
     const minutes = date.getMinutes();
-
-    return `${day}/${month}/${year} | ${hours}:${minutes}`;
+    const resultMinutes = minutes > 10 ? minutes : `0${minutes}`;
+    return `${day}/${month}/${year} | ${hours}:${resultMinutes}`;
   }
 
   return (
