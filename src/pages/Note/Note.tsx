@@ -127,7 +127,7 @@ function Note() {
             className={NoteClassNames.upperCaseIcon}
           />
         </ListItemButton>
-        <Button onClick={() => setModalActive(true)}>Удалить</Button>
+        <Button onClick={() => setModalActive(true)} className={NoteClassNames.deleteButton}>Delete</Button>
       </Header>
       {!loading ? (
         <>
@@ -185,7 +185,11 @@ function Note() {
                   onChange={(e) => {
                     setChangeActive({ type: 'Update Note', status: true });
                     setNote((note: any) => {
-                      return { ...note, title: e.target.value };
+                      return {
+                        ...note,
+                        title: e.target.value,
+                        date: new Date(),
+                      };
                     });
                   }}
                   onBlur={() => {
@@ -202,7 +206,10 @@ function Note() {
                   onChange={(e) => {
                     setChangeActive({ type: 'Update Note', status: true });
                     setNote((note: any) => {
-                      return { ...note, description: e.target.value };
+                      return {
+                        ...note,
+                        description: e.target.value,
+                      };
                     });
                   }}
                   onBlur={() => {

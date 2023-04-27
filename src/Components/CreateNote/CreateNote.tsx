@@ -5,17 +5,18 @@ import uniqid from 'uniqid';
 // Icon
 import CrossIcon from '../SettingsModal/icon/cross.svg';
 
+// Other
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootReducer } from '../../Types/Types';
+import { createNote } from '../../utils/utils';
+import { updateData } from '../../redux/reducers/rootReducer';
+import { modalClose } from '../../redux/reducers/modalReducer';
+
 // Components
 import { Button } from '@mui/material';
 
 // Styles
 import CreateNoteClassNames from './CreateNote.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootReducer } from '../../Types/Types';
-import { createNote } from '../../utils/utils';
-import { update } from 'firebase/database';
-import { updateData } from '../../redux/reducers/rootReducer';
-import { modalClose } from '../../redux/reducers/modalReducer';
 
 export interface INewNote {
   title: string;
@@ -40,7 +41,7 @@ const CreateNote = React.forwardRef((_, ref) => {
 
   const dispatch = useDispatch();
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit() {
     if (userId?.toString()) {
       const id: any = userId.toString();
 
@@ -73,14 +74,14 @@ const CreateNote = React.forwardRef((_, ref) => {
             display: 'flex',
             flexDirection: 'column',
             boxSizing: 'border-box',
-            alignItems: 'center',
+            height: '100%',
             padding: '0',
-            marginLeft: 0,
+            margin: 0,
             border: 'none',
           }}
         >
           <input
-            placeholder="write here your title for note"
+            placeholder="write title"
             onChange={(e) => {
               setNote({ ...note, title: e.target.value });
             }}
@@ -90,22 +91,19 @@ const CreateNote = React.forwardRef((_, ref) => {
             required
             className={CreateNoteClassNames.inputTitle}
           />
+          <textarea
+            className={CreateNoteClassNames.inputDescription}
+            onChange={(e) => {
+              setNote({ ...note, description: e.target.value });
+            }}
+            placeholder="Write description"
+          />
         </fieldset>
-        <fieldset
-          style={{
-            display: 'flex',
-            padding: 0,
-            boxSizing: 'border-box',
-            border: 'none',
-            marginLeft: 'auto',
-          }}
-        >
+        <fieldset className={CreateNoteClassNames.submitGroup}>
           <Button
             type="submit"
             className={CreateNoteClassNames.button}
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
+            onClick={() => handleSubmit()}
           >
             create
           </Button>

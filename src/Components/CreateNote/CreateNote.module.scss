@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 2.128%;
-  height: 556px;
+  max-height: 700px;
+  height: 100%;
   box-sizing: border-box;
   background: #242424;
   box-shadow: 0px 7px 11px rgba(0, 0, 0, 0.25);
@@ -34,6 +35,7 @@
   .crossIcon {
     display: flex;
     height: 22px !important;
+    cursor: pointer;
 
     div {
       display: flex;
@@ -44,6 +46,9 @@
     flex-direction: column;
     position: relative;
     height: 100%;
+    gap: 20px;
+    overflow: auto;
+    overflow-y: hidden;
     justify-content: space-between;
   }
 
@@ -56,33 +61,45 @@
     font-family: 'Roboto';
     font-weight: 600;
     font-size: 40px;
+    text-overflow: ellipsis;
     line-height: 47px;
     color: #7d7d7d;
+    margin-bottom: 10px;
+  }
+
+  .submitGroup {
+    display: flex;
+    padding: 0;
+    box-sizing: border-box;
+    margin-left: auto;
+    border: none;
   }
 
   .inputTitle::placeholder {
     text-transform: uppercase !important;
   }
 
-  // .inputDescription {
-  //   background: none;
-  //   outline: none;
-  //   width: 100%;
-  //   padding: 0;
-  //   overflow-y: scroll;
-  //   border: none;
-  //   font-family: 'Roboto';
-  //   font-style: normal;
-  //   font-weight: 400;
-  //   font-size: 30px;
-  //   line-height: 35px;
-  //   resize: none;
-  //   color: #7d7d7d;
-  // }
+  .inputDescription {
+    background: none;
+    outline: none;
+    width: 100%;
+    padding: 0;
+    max-height: 300px;
+    height: 100%;
+    overflow-y: scroll;
+    border: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 35px;
+    resize: none;
+    color: #7d7d7d;
+  }
 
-  // .inputDescription::placeholder {
-  //   text-transform: uppercase;
-  // }
+  .inputDescription::placeholder {
+    text-transform: uppercase;
+  }
 
   .button {
     padding: 16px 66px;
@@ -100,5 +117,120 @@
 
   .button:hover {
     background: #d64949;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-height: 373px;
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header > h1 {
+      font-size: 35px;
+      line-height: 40px;
+      font-weight: 600;
+    }
+
+    .inputTitle {
+      text-align: center;
+      font-size: 35px;
+    }
+
+    .inputDescription {
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .submitGroup {
+      margin: 0 auto;
+    }
+
+    .button {
+      padding: 12px 30px;
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container {
+    max-height: 360px;
+    padding: 20px;
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header > h1 {
+      font-size: 27px;
+      line-height: 25px;
+    }
+
+    .header > .crossIcon {
+      height: 17px !important;
+
+      svg {
+        height: 17px;
+        width: 17px;
+      }
+    }
+
+    .inputTitle {
+      font-size: 20px;
+      line-height: 23px;
+    }
+
+    .inputDescription {
+      font-size: 18px;
+    }
+
+    .button {
+      padding: 13px 32px;
+      font-size: 18px;
+      line-height: 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .container {
+    max-height: 300px;
+    padding: 10px;
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header > .crossIcon {
+      height: 17px !important;
+
+      svg {
+        height: 17px;
+        width: 17px;
+      }
+    }
+
+    .header > h1 {
+      font-size: 20px;
+      line-height: 35px;
+    }
+
+    .inputTitle {
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    .inputDescription {
+      font-size: 16px;
+    }
+
+    .button {
+      padding: 13px 32px;
+      font-size: 18px;
+      line-height: 16px;
+    }
   }
 }

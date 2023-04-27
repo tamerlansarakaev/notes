@@ -7,7 +7,20 @@ import './NoteItem.scss';
 import { INote } from '../../Types/Types';
 import { Link } from 'react-router-dom';
 
-export default function NoteItem({ title, description, id }: INote) {
+export default function NoteItem({ title, description, id, date }: INote) {
+  function formatCurrentDate(currentDate: number) {
+    if (!currentDate) return;
+
+    const date = new Date(currentDate);
+    const month = date.getMonth();
+    const day = date.getDay();
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    return `${day}/${month}/${year} | ${hours}:${minutes}`;
+  }
+
   return (
     <>
       <div className="note-item">
@@ -18,6 +31,7 @@ export default function NoteItem({ title, description, id }: INote) {
           </div>
         </Link>
         <span className="note-end-text">{title}</span>
+        <span className="note-end-time">{date && formatCurrentDate(date)}</span>
       </div>
     </>
   );

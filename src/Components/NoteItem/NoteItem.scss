@@ -9,58 +9,59 @@
   overflow: hidden;
   box-sizing: border-box;
   width: 100%;
-}
 
-.note-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-height: 195px;
-  height: 100%;
-  text-decoration: none;
-  outline: none;
-  color: #fff;
-  padding: 10px;
-  border: 2px solid #1d1d1d;
-  box-sizing: border-box;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.5s;
-  background: #1d1d1d;
-}
-
-.note-box:hover {
-  border-color: #fab906;
-}
-
-.note-box-title {
-  font-weight: 600;
-}
-
-.note-end-text {
-  text-align: center;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.note-end-time {
-  text-align: center;
-  font-weight: 500;
-}
-
-.note-item-info {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  overflow: hidden;
-  height: 100%;
-  word-wrap: break-word;
-
-  .note-box-description {
+  .note-box {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    white-space: pre-wrap;
-    height: 84%;
+    max-height: 195px;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    padding: 10px;
+    border: 2px solid #1d1d1d;
+    box-sizing: border-box;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.5s;
+    background: #1d1d1d;
+  }
+
+  .note-box:hover {
+    border-color: #fab906;
+  }
+
+  .note-box-title {
+    font-weight: 600;
+  }
+
+  .note-end-text {
+    text-align: center;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .note-end-time {
+    text-align: center;
+    font-family: 'Roboto';
+    font-weight: 500;
+  }
+
+  .note-item-info {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    word-wrap: break-word;
+
+    .note-box-description {
+      width: 100%;
+      white-space: pre-wrap;
+      height: 84%;
+    }
   }
 }
 
