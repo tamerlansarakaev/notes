@@ -102,12 +102,23 @@
 }
 
 .deleteModal {
+  display: flex;
+  box-sizing: border-box;
   background: #181818;
-  padding: 43px 165px;
-  gap: 50px;
+  border-radius: 12px;
+  padding: 43px 10%;
+}
 
-  span {
-    max-width: none;
+.deleteModalContainer {
+  gap: 50px;
+  padding: 0;
+  background: inherit;
+  display: flex;
+  box-shadow: none;
+  box-sizing: border-box;
+
+  h1 {
+    max-width: none !important;
   }
 
   .modalActions {
@@ -186,6 +197,28 @@
 
   .deleteButton {
     line-height: 15px;
+  }
+
+  .deleteModal {
+    padding: 20px;
+
+    .modalActions {
+      gap: 30px;
+    }
+
+    .modalConfirmDeleteButton {
+      font-size: 16px;
+      padding: 6px 30px;
+    }
+
+    h1 {
+      font-size: 23px !important;
+    }
+
+    .modalCanselDeleteButton {
+      font-size: 16px;
+      padding: 6px 30px;
+    }
   }
 
   .description {
