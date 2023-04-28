@@ -213,6 +213,7 @@ function Note() {
                       return {
                         ...note,
                         description: e.target.value,
+                        date: new Date().getTime(),
                       };
                     });
                   }}

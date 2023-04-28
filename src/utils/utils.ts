@@ -1,8 +1,10 @@
-import { Auth } from 'firebase/auth';
+import { Auth, getAuth } from 'firebase/auth';
 import { INote, IUser } from '../Types/Types';
-import { getDatabase, ref, remove, set } from 'firebase/database';
+import { get, getDatabase, ref, remove, set } from 'firebase/database';
 import { debounce } from '@mui/material';
 import { INewNote } from '../Components/CreateNote/CreateNote';
+import { useDispatch } from 'react-redux';
+import { signOutUser } from '../redux/reducers/rootReducer';
 
 export const findCurrentNote = (notes: INote[], id: string | undefined) => {
   try {
@@ -68,3 +70,31 @@ export const createNote = async (note: INewNote, userId: string) => {
   const db = getDatabase();
   set(ref(db, `/users/${userId}/notes/${note.id}`), { ...note });
 };
+
+export async function getData(
+  dispatch: any
+): Promise<IUser | null | undefined> {
+  const auth = getAuth();
+  const validateUser = await validateLoginStatus(auth);
+  if (!validateUser) {
+    dispatch(signOutUser());
+  }
+  const db = getDatabase();
+  const starCountRef = ref(db, '/users');
+
+  try {
+    if (validateUser?.email) {
+      const snapshot = await get(starCountRef);
+      const data = snapshot.val();
+      const userArray = Object.values(data);
+      const result: any = userArray.find((user: any) => {
+        return validateUser.email === user.email;
+      });
+
+      return result;
+    }
+  } catch (error) {
+    return null;
+  }
+  return;
+}

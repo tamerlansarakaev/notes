@@ -9,7 +9,7 @@ import 'firebase/auth';
 // Other
 import { signInUser, signOutUser } from './redux/reducers/rootReducer';
 import { INote, IRootReducer, IUser } from './Types/Types';
-import { validateLoginStatus } from './utils/utils';
+import { getData, validateLoginStatus } from './utils/utils';
 
 // Pages for App
 import Home from './pages/Home/Home';
@@ -33,36 +33,10 @@ function App(): React.ReactElement {
     (state: IRootReducer) => state.rootReducer.authStatus
   );
 
-  async function getData(): Promise<IUser | null | undefined> {
-    const auth = getAuth();
-    const validateUser = await validateLoginStatus(auth);
-    if (!validateUser) {
-      dispatch(signOutUser());
-    }
-    const db = getDatabase();
-    const starCountRef = ref(db, '/users');
-
-    try {
-      if (validateUser?.email) {
-        const snapshot = await get(starCountRef);
-        const data = snapshot.val();
-        const userArray = Object.values(data);
-        const result: any = userArray.find((user: any) => {
-          return validateUser.email === user.email;
-        });
-
-        return result;
-      }
-    } catch (error) {
-      return null;
-    }
-    return;
-  }
-
   React.useEffect(() => {
     if (updateStatus) {
       const setData = async () => {
-        const data: any = await getData();
+        const data: any = await getData(dispatch);
         return data;
       };
       setData().then((data: IUser) => {

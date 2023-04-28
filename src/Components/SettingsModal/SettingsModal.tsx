@@ -1,6 +1,9 @@
 // Global
 import React from 'react';
 import { ReactSVG } from 'react-svg';
+
+// Redux
+import { modalClose } from '../../redux/reducers/modalReducer';
 import { useDispatch } from 'react-redux';
 
 // Components
@@ -12,7 +15,6 @@ import CrossIcon from './icon/cross.svg';
 
 // Styles
 import settingsClassNames from './SettingsModal.module.scss';
-import { modalClose } from '../../redux/reducers/modalReducer';
 
 type SettingsModal = {
   open: boolean;
