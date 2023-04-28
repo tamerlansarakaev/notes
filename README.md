@@ -4,7 +4,7 @@
 
 
 # Home Page
-![Home page for Notes Prevıew](https://user-images.githubusercontent.com/96797238/235013626-0f246ca1-3e10-4f86-9827-272de201571a.jpg)
+![home](https://user-images.githubusercontent.com/96797238/235015511-47bd8aea-51d6-4bce-b3f5-9874caac9329.jpg)
 
 # Edit Page
 ![Note Edit Page](https://user-images.githubusercontent.com/96797238/235013746-c4152193-db7d-4d3b-890c-d7959ff22d80.jpg)
