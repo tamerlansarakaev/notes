@@ -22,7 +22,7 @@ const CustomModalBox: React.FC<CustomModal> = forwardRef(
       >
         {text && (
           <Typography
-            component="span"
+            component="h1"
             sx={{
               fontFamily: 'Roboto',
               fontStyle: 'normal',

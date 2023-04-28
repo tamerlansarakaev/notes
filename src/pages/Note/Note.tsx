@@ -252,10 +252,10 @@ function Note() {
           alignItems: 'center',
         }}
       >
-        <div>
+        <div className={NoteClassNames.deleteModal}>
           <CustomModal
             text="Confirm note deletion"
-            className={NoteClassNames.deleteModal}
+            className={NoteClassNames.deleteModalContainer}
           >
             <div className={NoteClassNames.modalActions}>
               <Button
