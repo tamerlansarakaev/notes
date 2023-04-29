@@ -45,3 +45,57 @@
 .blackLightButton:active {
   background: #6b6a6a;
 }
+
+.whiteBorderButton {
+  display: flex;
+  padding: 10px 28px;
+  width: fit-content;
+
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 10px;
+  text-transform: uppercase;
+  background: none;
+  border: 2px solid #efefef;
+  border-radius: 12px;
+  color: var(--whiteColor);
+  cursor: pointer;
+
+  transition: 1s all;
+}
+
+.whiteBorderButton:hover {
+  background: #e9e7e7;
+  color: #1d1d1d;
+  box-shadow: 0px 0px 5px #efefef;
+  border-color: #e9e7e7;
+}
+
+.bluePurpleButton {
+  padding: 14px 62px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  transition: 0.5s background;
+  text-transform: uppercase;
+  color: var(--whiteColor);
+  background: linear-gradient(268.45deg, #86e4f9 -116.19%, #3c2792 106.22%);
+  transition: background-position 0.5s ease-in-out;
+  background-size: 400% 400%;
+  background-position: top left;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+
+.bluePurpleButton:hover {
+  background-position: bottom right;
+  background-image: linear-gradient(
+    268.45deg,
+    #5dddf9 -116.19%,
+    #5534da 106.22%
+  );
+}

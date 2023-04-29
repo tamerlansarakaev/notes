@@ -31,8 +31,8 @@ interface IFormState {
 
 const Login: React.FunctionComponent = () => {
   const [formState, setFormState] = React.useState<IFormState>({
-    mail: 'admin@notes.com',
-    password: 'adminroot',
+    mail: '',
+    password: '',
   });
 
   const loginStatus = useSelector(
@@ -142,10 +142,15 @@ const Login: React.FunctionComponent = () => {
           </fieldset>
           <fieldset className={classNames.buttonForm}>
             <Button className={buttonClassNames.redLightButton}>Sign In</Button>
-            <label>
-              При авторизации на сайте, вы даете согласие на обработку своих
-              данных.
-            </label>
+            <Button
+              className={buttonClassNames.whiteBorderButton}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/register');
+              }}
+            >
+              Sign up
+            </Button>
           </fieldset>
         </fieldset>
       </form>

@@ -19,6 +19,7 @@ import Login from './pages/Login/Login';
 // Styles
 import './App.scss';
 import './vars/vars.scss';
+import Register from './pages/Register/Register';
 
 function App(): React.ReactElement {
   const dispatch = useDispatch();
@@ -93,7 +94,10 @@ function App(): React.ReactElement {
         <Route path="*" element={<Home />} />
         <Route path="/notes/:id" element={<Note />} />
         {statusUserLogin === 'Not Authorized' ? (
-          <Route path="/login" element={<Login />} />
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </>
         ) : (
           ''
         )}
