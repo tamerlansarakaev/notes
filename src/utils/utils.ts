@@ -1,10 +1,10 @@
-import { Auth, getAuth } from 'firebase/auth';
+import { Auth, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { INote, IUser } from '../Types/Types';
 import { get, getDatabase, ref, remove, set } from 'firebase/database';
 import { debounce } from '@mui/material';
 import { INewNote } from '../Components/CreateNote/CreateNote';
-import { useDispatch } from 'react-redux';
 import { signOutUser } from '../redux/reducers/rootReducer';
+import app from '../Api/api';
 
 export const findCurrentNote = (notes: INote[], id: string | undefined) => {
   try {
@@ -47,7 +47,6 @@ export const deleteNote = async (userId: any, noteId: string | number) => {
     const deleteNote = await remove(
       ref(db, `/users/${userId}/notes/${noteId}`)
     );
-    console.log(noteId);
     return deleteNote;
   } catch (err) {
     return err;
@@ -98,3 +97,17 @@ export async function getData(
   }
   return;
 }
+
+export const createUser = async ({ mail, password }: any) => {
+  const db = getDatabase();
+  const auth = getAuth(app);
+  await createUserWithEmailAndPassword(auth, mail, password).then((user) => {
+    const id = user.user.uid;
+    const resultUser = {
+      email: user.user.email,
+      id,
+      notes: [],
+    };
+    set(ref(db, `/users/${id}`), { ...resultUser });
+  });
+};
