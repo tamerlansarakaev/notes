@@ -99,3 +99,17 @@
     #5534da 106.22%
   );
 }
+
+@media screen and (max-width: 425px) {
+  .redLightButton {
+    font-size: 16px;
+  }
+
+  .whiteBorderButton {
+    font-size: 14px;
+  }
+
+  .bluePurpleButton {
+    font-size: 16px;
+  }
+}

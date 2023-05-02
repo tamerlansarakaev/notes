@@ -70,3 +70,15 @@
     transition: fill 0.5s ease-in-out;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .menu {
+    right: 10px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .menu {
+    right: 0;
+  }
+}
