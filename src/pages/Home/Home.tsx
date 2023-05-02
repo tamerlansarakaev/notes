@@ -9,10 +9,15 @@ import { Box, Modal } from '@mui/material';
 
 // Types
 import { IModalReducer, IRootReducer } from '../../Types/Types';
+import { types } from '../../redux/types';
 
 // Components
 import Header from '../../Components/Header/Header';
 import NotesList from '../../Components/NotesList/NotesList';
+import Button from '../../Components/UI/Button/Button';
+import CreateNote from '../../Components/CreateNote/CreateNote';
+import SettingsModal from '../../Components/SettingsModal/SettingsModal';
+import CustomMenuProfile from '../../Components/UI/CustomMenu/CustomMenuProfile';
 
 // Icons
 import AddNotesIcon from '../../assets/headerIcons/addNoteIcon.svg';
@@ -21,14 +26,11 @@ import SignOutIcon from '../../assets/headerIcons/exit.svg';
 
 // Styles
 import homeClassNames from './Home.module.scss';
-import CustomMenuProfile from '../../Components/UI/CustomMenu/CustomMenuProfile';
-import Button from '../../Components/UI/Button/Button';
+
+// Other
 import { getAuth } from 'firebase/auth';
 import { signOutUser } from '../../redux/reducers/rootReducer';
-import SettingsModal from '../../Components/SettingsModal/SettingsModal';
 import { modalClose, modalOpen } from '../../redux/reducers/modalReducer';
-import CreateNote from '../../Components/CreateNote/CreateNote';
-import { types } from '../../redux/types';
 
 function Home() {
   const modalStatus = useSelector((state: IModalReducer) => state.modalReducer);
