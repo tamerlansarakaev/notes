@@ -1,15 +1,13 @@
 // Global import for App
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import 'firebase/auth';
 
 // Other
-import { signInUser, signOutUser } from './redux/reducers/rootReducer';
+import { signInUser } from './redux/reducers/rootReducer';
 import { INote, IRootReducer, IUser } from './Types/Types';
-import { getData, validateLoginStatus } from './utils/utils';
+import { getData } from './utils/utils';
 
 // Pages for App
 import Home from './pages/Home/Home';
