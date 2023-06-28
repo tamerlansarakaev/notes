@@ -1,8 +1,3 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }],
-  "build": {
-    "env": {
-      "CI": "false"
-    }
-  }
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
