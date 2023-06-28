@@ -1,27 +1,27 @@
 // Global import for App
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import 'firebase/auth';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import "firebase/auth";
 
 // Other
-import { signInUser } from './redux/reducers/rootReducer';
-import { INote, IRootReducer, IUser } from './Types/Types';
-import { getData } from './utils/utils';
+import { signInUser } from "./redux/reducers/rootReducer";
+import { INote, IRootReducer, IUser } from "./Types/Types";
+import { getData } from "./utils/utils";
 
 // Pages for App
-import Home from './pages/Home/Home';
-import Note from './pages/Note/Note';
-import Login from './pages/Login/Login';
+import Home from "./pages/Home/Home";
+import Note from "./pages/Note/Note";
+import Login from "./pages/Login/Login";
 
 // Styles
-import './App.scss';
-import './vars/vars.scss';
-import Register from './pages/Register/Register';
+import "./App.scss";
+import "./vars/vars.scss";
+import Register from "./pages/Register/Register";
 
 function App(): React.ReactElement {
   const dispatch = useDispatch();
-  const [statusUserLogin, setStatusUserLogin] = React.useState('');
+  const [statusUserLogin, setStatusUserLogin] = React.useState("");
   const loginStatus = useSelector(
     (state: IRootReducer) => state.rootReducer.loginStatus
   );
@@ -55,10 +55,10 @@ function App(): React.ReactElement {
               signInUser({
                 notes: notesList,
                 user: { email: data.email, id: data.id },
-                authStatus: 'Authorized',
+                authStatus: "Authorized",
               })
             );
-            setStatusUserLogin('Authorized');
+            setStatusUserLogin("Authorized");
             return;
           }
         } else if (!notesList.length) {
@@ -66,14 +66,14 @@ function App(): React.ReactElement {
             signInUser({
               notes: notesList,
               user: { email: data.email, id: data.id },
-              authStatus: 'Authorized',
+              authStatus: "Authorized",
             })
           );
         } else {
           dispatch(
-            signInUser({ authStatus: 'Not Authorized', notes: [], user: {} })
+            signInUser({ authStatus: "Not Authorized", notes: [], user: {} })
           );
-          setStatusUserLogin('Not Authorized');
+          setStatusUserLogin("Not Authorized");
           return data;
         }
       });
@@ -90,14 +90,14 @@ function App(): React.ReactElement {
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<Home />} />
-        <Route path="/notes/:id" element={<Note />} />
-        {statusUserLogin === 'Not Authorized' ? (
+        <Route path="/:id" element={<Note />} />
+        {statusUserLogin === "Not Authorized" ? (
           <>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </>
         ) : (
-          ''
+          ""
         )}
       </Routes>
     </BrowserRouter>
