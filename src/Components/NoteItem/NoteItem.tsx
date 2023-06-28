@@ -24,7 +24,7 @@ export default function NoteItem({ title, description, id, date }: INote) {
   return (
     <>
       <div className="note-item">
-        <Link to={`/notes/${id}`} className="note-box">
+        <Link to={`/${id}`} className="note-box">
           <div className="note-item-info">
             <span className="note-box-title">{title}</span>
             <span className="note-box-description">{description}</span>
