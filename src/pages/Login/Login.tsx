@@ -31,8 +31,8 @@ interface IFormState {
 
 const Login: React.FunctionComponent = () => {
   const [formState, setFormState] = React.useState<IFormState>({
-    mail: '',
-    password: '',
+    mail: 'admin@notes.com',
+    password: 'adminroot',
   });
 
   const loginStatus = useSelector(
