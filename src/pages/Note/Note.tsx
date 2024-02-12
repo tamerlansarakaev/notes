@@ -54,10 +54,17 @@ function Note() {
     const filterNotes = allNotes.filter((noteFilter) => {
       return noteFilter.id !== note?.id;
     });
+    console.log(filterNotes);
     const resultNotes = [...filterNotes, note];
-    dispatch(changeNote(resultNotes));
-    return resultNotes;
-  }, [note?.title, note?.description]);
+    console.log(changeActive.type);
+    if (changeActive.type === "DELETE") {
+      dispatch(changeNote(filterNotes));
+      return resultNotes;
+    } else {
+      dispatch(changeNote(resultNotes));
+      return resultNotes;
+    }
+  }, [note?.title, note?.description, note, changeActive]);
 
   React.useEffect(() => {
     if (!changeActive.status) return;
@@ -72,10 +79,15 @@ function Note() {
 
     const userId = user?.id?.toString();
 
-    if (note?.id.toString() && changeActive.type === "DELETE") {
-      const noteId = note.id.toString();
-      deleteNote(userId, noteId).then(dispatch(updateData()));
-    }
+    (async () => {
+      if (note?.id.toString() && changeActive.type === "DELETE") {
+        const noteId = note.id.toString();
+        await deleteNote(userId, noteId).then(dispatch(updateData()));
+        await changeNotes();
+        console.log(allNotes);
+        navigate("/");
+      }
+    })();
 
     if (changeActive.status && changeActive.type === "UpperCase") {
       if (!note) return;
