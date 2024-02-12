@@ -83,7 +83,7 @@ const CreateNote = React.forwardRef((_, ref) => {
             onChange={(e) => {
               setNote({ ...note, title: e.target.value });
             }}
-            minLength={5}
+            minLength={1}
             value={note.title}
             maxLength={50}
             required
@@ -95,6 +95,8 @@ const CreateNote = React.forwardRef((_, ref) => {
               setNote({ ...note, description: e.target.value });
             }}
             placeholder="Write description"
+            maxLength={5000}
+
           />
         </fieldset>
         <fieldset className={CreateNoteClassNames.submitGroup}>
