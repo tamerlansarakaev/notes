@@ -38,9 +38,12 @@ function App(): React.ReactElement {
         const data: any = await getData(dispatch);
         return data;
       };
+
       setData().then((data: IUser) => {
         if (!data) return;
+
         let notesList: INote[] = [];
+
         if (data.notes) {
           const inArray: INote[] = Object.values(data.notes);
           const inArrayKeys = Object.keys(data.notes);
@@ -50,6 +53,7 @@ function App(): React.ReactElement {
               notesList.push({ ...note, id: inArrayKeys[i] });
             }
           });
+
           if (notesList) {
             dispatch(
               signInUser({
@@ -58,6 +62,7 @@ function App(): React.ReactElement {
                 authStatus: "Authorized",
               })
             );
+
             setStatusUserLogin("Authorized");
             return;
           }
@@ -73,6 +78,7 @@ function App(): React.ReactElement {
           dispatch(
             signInUser({ authStatus: "Not Authorized", notes: [], user: {} })
           );
+
           setStatusUserLogin("Not Authorized");
           return data;
         }
@@ -91,6 +97,7 @@ function App(): React.ReactElement {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/:id" element={<Note />} />
+
         {statusUserLogin === "Not Authorized" ? (
           <>
             <Route path="/login" element={<Login />} />
