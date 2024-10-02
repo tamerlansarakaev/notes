@@ -1,45 +1,47 @@
 // Global
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 
 // MUI for App
-import { Box, Modal } from '@mui/material';
+import { Box, Modal } from "@mui/material";
 
 // Types
-import { IModalReducer, IRootReducer } from '../../Types/Types';
-import { types } from '../../redux/types';
+import { IModalReducer, IRootReducer } from "../../Types/Types";
+import { types } from "../../redux/types";
 
 // Components
-import Header from '../../Components/Header/Header';
-import NotesList from '../../Components/NotesList/NotesList';
-import Button from '../../Components/UI/Button/Button';
-import CreateNote from '../../Components/CreateNote/CreateNote';
-import SettingsModal from '../../Components/SettingsModal/SettingsModal';
-import CustomMenuProfile from '../../Components/UI/CustomMenu/CustomMenuProfile';
+import Header from "../../Components/Header/Header";
+import NotesList from "../../Components/NotesList/NotesList";
+import Button from "../../Components/UI/Button/Button";
+import CreateNote from "../../Components/CreateNote/CreateNote";
+import SettingsModal from "../../Components/SettingsModal/SettingsModal";
+import CustomMenuProfile from "../../Components/UI/CustomMenu/CustomMenuProfile";
 
 // Icons
-import AddNotesIcon from '../../assets/headerIcons/addNoteIcon.svg';
-import SettingsIcon from '../../assets/headerIcons/settingsforProfile.svg';
-import SignOutIcon from '../../assets/headerIcons/exit.svg';
+import AddNotesIcon from "../../assets/headerIcons/addNoteIcon.svg";
+import SettingsIcon from "../../assets/headerIcons/settingsforProfile.svg";
+import SignOutIcon from "../../assets/headerIcons/exit.svg";
 
 // Styles
-import homeClassNames from './Home.module.scss';
+import homeClassNames from "./Home.module.scss";
 
 // Other
-import { getAuth } from 'firebase/auth';
-import { signOutUser } from '../../redux/reducers/rootReducer';
-import { modalClose, modalOpen } from '../../redux/reducers/modalReducer';
+import { getAuth } from "firebase/auth";
+import { signOutUser } from "../../redux/reducers/rootReducer";
+import { modalClose, modalOpen } from "../../redux/reducers/modalReducer";
 
 function Home() {
   const modalStatus = useSelector((state: IModalReducer) => state.modalReducer);
 
   const navigate = useNavigate();
   const location = useLocation();
+
   const authStatus = useSelector(
     (state: IRootReducer) => state.rootReducer.authStatus
   );
+
   const auth = getAuth();
   const dispatch = useDispatch();
 
@@ -50,7 +52,7 @@ function Home() {
   }
 
   function openModalSettings() {
-    dispatch(modalOpen({ modalType: 'SettingsModal', modalStatus: true }));
+    dispatch(modalOpen({ modalType: "SettingsModal", modalStatus: true }));
   }
 
   function openCreateModal() {
@@ -58,20 +60,20 @@ function Home() {
   }
 
   React.useEffect(() => {
-    if (authStatus === 'Not Authorized') {
-      navigate('/login');
-    } else if (location.pathname === '/login' && authStatus === 'Authorized') {
-      navigate('/');
+    if (authStatus === "Not Authorized") {
+      navigate("/login");
+    } else if (location.pathname === "/login" && authStatus === "Authorized") {
+      navigate("/");
     }
   }, [authStatus]);
 
   return (
     <Box
       sx={{
-        bgcolor: '#2E2E2E',
-        color: 'white',
-        minHeight: '100vh',
-        minWidth: '100%',
+        bgcolor: "#2E2E2E",
+        color: "white",
+        minHeight: "100vh",
+        minWidth: "100%",
       }}
     >
       <Header activeBackButton={false} className={homeClassNames.header}>
@@ -95,9 +97,10 @@ function Home() {
           </Button>
         </CustomMenuProfile>
       </Header>
+
       <SettingsModal
         open={
-          modalStatus.modalStatus && modalStatus.modalType === 'SettingsModal'
+          modalStatus.modalStatus && modalStatus.modalType === "SettingsModal"
             ? true
             : false
         }
@@ -111,16 +114,16 @@ function Home() {
         }
         onClose={() => dispatch(modalClose())}
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
         }}
         slotProps={{
           backdrop: {
             style: {
-              background: 'rgba(26, 26, 26, 0.5)',
-              backdropFilter: 'blur(15px)',
+              background: "rgba(26, 26, 26, 0.5)",
+              backdropFilter: "blur(15px)",
             },
           },
         }}

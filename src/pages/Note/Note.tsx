@@ -39,37 +39,45 @@ function Note() {
     status: false,
   });
   const [modalActive, setModalActive] = React.useState<boolean>(false);
+
   const [loading, setLoading] = React.useState<boolean>(true);
   const [note, setNote] = React.useState<INote | null>({
     id: 0,
     description: "",
     title: "",
   });
+
   const { id } = useParams();
   const allNotes = useSelector((state: INotesList) => state.rootReducer.notes);
   const user = useSelector((state: IRootReducer) => state.rootReducer.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const changeNotes = React.useCallback(async () => {
     const filterNotes = allNotes.filter((noteFilter) => {
       return noteFilter.id !== note?.id;
     });
-    console.log(filterNotes);
+
     const resultNotes = [...filterNotes, note];
-    console.log(changeActive.type);
+
     if (changeActive.type === "DELETE") {
       dispatch(changeNote(filterNotes));
+
       return resultNotes;
     } else {
       dispatch(changeNote(resultNotes));
+
       return resultNotes;
     }
   }, [note?.title, note?.description, note, changeActive]);
 
   React.useEffect(() => {
     if (!changeActive.status) return;
+
     if (changeActive.status && changeActive.type !== "DELETE") {
       if (!note) return;
+
       changeNotes().then(
         debounce(() => {
           writeDataNote(user?.id, note);
@@ -82,19 +90,21 @@ function Note() {
     (async () => {
       if (note?.id.toString() && changeActive.type === "DELETE") {
         const noteId = note.id.toString();
+
         await deleteNote(userId, noteId).then(dispatch(updateData()));
         await changeNotes();
-        console.log(allNotes);
         navigate("/");
       }
     })();
 
-    if (changeActive.status && changeActive.type === "UpperCase") {
-      if (!note) return;
+    if (changeActive.status && changeActive.type === "UpperCase" && note) {
       const upperNote = upperCaseNote(note);
+
       if (!upperNote) return;
       setNote(upperNote);
+
       setChangeActive({ ...changeActive, type: "" });
+
       setTimeout(() => {
         setChangeActive({ ...changeActive, status: false });
       }, 1000);
@@ -104,6 +114,7 @@ function Note() {
   React.useEffect(() => {
     if (allNotes.length && !changeActive.status) {
       const foundNote = findCurrentNote(allNotes, id);
+
       if (foundNote !== undefined) {
         setNote(foundNote);
         setLoading(false);
