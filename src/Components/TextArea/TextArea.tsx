@@ -43,6 +43,8 @@ const TextArea: React.FC<ITextAreaProps> = ({
   const handleContextMenu = (
     e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>
   ) => {
+    if (isMobile) return;
+
     setTextAreaClickPosition({
       top: e?.clientY,
       left: e?.clientX,
