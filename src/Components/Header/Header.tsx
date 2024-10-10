@@ -1,12 +1,10 @@
 // MUI for App
-import { Box, ListItemButton } from '@mui/material';
-import GridViewIcon from '@mui/icons-material/GridView';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Box, ListItemButton } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 // Styles
-import './Header.scss';
-import { Link } from 'react-router-dom';
+import "./Header.scss";
+import { Link } from "react-router-dom";
 
 interface IHeader {
   children?: React.ReactNode;
@@ -17,46 +15,47 @@ interface IHeader {
 export default function Header({
   children,
   activeBackButton = true,
-  className = '',
+  className = "",
 }: IHeader) {
   return (
     <div
       className={`header-notes ${className}`}
       style={{
-        display: 'flex',
-        boxSizing: 'border-box',
-        justifyContent: 'space-between',
-        minHeight: '67px',
+        display: "flex",
+        boxSizing: "border-box",
+        justifyContent: "space-between",
+        minHeight: "67px",
       }}
     >
       {activeBackButton && (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <ListItemButton
             sx={{
-              borderRadius: '8px',
-              display: 'flex',
-              width: '41px',
-              height: '41px',
-              boxSizing: 'border-box',
-              justifyContent: 'center',
+              borderRadius: "8px",
+              display: "flex",
+              width: "41px",
+              height: "41px",
+              boxSizing: "border-box",
+              justifyContent: "center",
             }}
           >
             <Link
-              to={'/'}
+              to={"/"}
+              onClick={() => speechSynthesis.cancel()}
               style={{
-                display: 'flex',
-                padding: '8px 16px',
-                boxSizing: 'border-box',
-                textDecoration: 'none',
-                outline: 'none',
+                display: "flex",
+                padding: "8px 16px",
+                boxSizing: "border-box",
+                textDecoration: "none",
+                outline: "none",
               }}
             >
-              <ArrowBackIosNewIcon fontSize="small" sx={{ fill: '#A4A4A4' }} />
+              <ArrowBackIosNewIcon fontSize="small" sx={{ fill: "#A4A4A4" }} />
             </Link>
           </ListItemButton>
         </Box>
       )}
-      {children ? children : ''}
+      {children ? children : ""}
     </div>
   );
 }
