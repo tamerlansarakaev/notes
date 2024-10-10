@@ -92,6 +92,10 @@ function App(): React.ReactElement {
     }
   }, [authStatus]);
 
+  React.useEffect(() => {
+    speechSynthesis.cancel();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
