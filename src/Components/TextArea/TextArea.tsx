@@ -1,7 +1,7 @@
 import { TextareaAutosize } from "@mui/material";
 import { useState } from "react";
 import TextAreaContextMenu from "../TextAreaContextMenu/TextAreaContextMenu";
-import { textToSpeech } from "../../utils/utils";
+import { detectMob, textToSpeech } from "../../utils/utils";
 import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import textAreaClassNames from "./TextArea.module.scss";
 
@@ -38,6 +38,8 @@ const TextArea: React.FC<ITextAreaProps> = ({
     textToSpeech({ text: value });
   };
 
+  const isMobile = detectMob();
+
   const handleContextMenu = (
     e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>
   ) => {
@@ -71,13 +73,15 @@ const TextArea: React.FC<ITextAreaProps> = ({
         value={value}
         onChange={(e) => handleWrite?.(e.target.value)}
       />
-      <TextAreaContextMenu
-        handleClickOutside={() => setTextAreaContextActive(false)}
-        handleSpeechText={handleSpeechText}
-        isActive={textAreaContextActive}
-        left={textAreaClickPosition.left}
-        top={textAreaClickPosition.top}
-      />
+      {!isMobile && (
+        <TextAreaContextMenu
+          handleClickOutside={() => setTextAreaContextActive(false)}
+          handleSpeechText={handleSpeechText}
+          isActive={textAreaContextActive}
+          left={textAreaClickPosition.left}
+          top={textAreaClickPosition.top}
+        />
+      )}
     </div>
   );
 };
