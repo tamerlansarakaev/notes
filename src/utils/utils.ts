@@ -126,7 +126,7 @@ export const textToSpeech = ({ text, options }: ITextToSpeech) => {
   if (detectedLang === "rus" || detectedLang === "ukr") {
     utterance.lang = "ru-ru";
   } else {
-    utterance.lang = "en-GB";
+    utterance.lang = "en-US";
   }
 
   if (options) {
