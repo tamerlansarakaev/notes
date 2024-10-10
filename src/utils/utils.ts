@@ -1,10 +1,11 @@
-import { Auth, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { INote, IUser } from '../Types/Types';
-import { get, getDatabase, ref, remove, set } from 'firebase/database';
-import { debounce } from '@mui/material';
-import { INewNote } from '../Components/CreateNote/CreateNote';
-import { signOutUser } from '../redux/reducers/rootReducer';
-import app from '../Api/api';
+import { Auth, createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { INote, IUser } from "../Types/Types";
+import { get, getDatabase, ref, remove, set } from "firebase/database";
+import { debounce } from "@mui/material";
+import { INewNote } from "../Components/CreateNote/CreateNote";
+import { signOutUser } from "../redux/reducers/rootReducer";
+import app from "../Api/api";
+import { franc } from "franc";
 
 export const findCurrentNote = (notes: INote[], id: string | undefined) => {
   try {
@@ -29,7 +30,7 @@ export const validateLoginStatus = (auth: Auth): Promise<IUser | null> => {
         resolve(currentUser);
       } else {
         resolve(null);
-        reject({ type: 'Not Authorization' });
+        reject({ type: "Not Authorization" });
       }
       unsubscribe();
     });
@@ -79,7 +80,7 @@ export async function getData(
     dispatch(signOutUser());
   }
   const db = getDatabase();
-  const starCountRef = ref(db, '/users');
+  const starCountRef = ref(db, "/users");
 
   try {
     if (validateUser?.email) {
@@ -110,4 +111,40 @@ export const createUser = async ({ mail, password }: any) => {
     };
     set(ref(db, `/users/${id}`), { ...resultUser });
   });
+};
+
+interface ITextToSpeech {
+  text: string;
+  options?: SpeechSynthesisUtterance;
+}
+
+export const textToSpeech = ({ text, options }: ITextToSpeech) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  const detectedLang = franc(text);
+
+  if (detectedLang === "rus" || detectedLang === "ukr") {
+    utterance.lang = "ru-ru";
+  } else {
+    utterance.lang = "en-GB";
+  }
+
+  if (options) {
+    if (options.lang) {
+      utterance.lang = options.lang;
+    }
+
+    if (options.rate) {
+      utterance.rate = options.rate;
+    }
+
+    if (options.voice) {
+      utterance.voice = options.voice;
+    }
+
+    if (options.volume) {
+      utterance.volume = options.volume;
+    }
+  }
+  return speechSynthesis.speak(utterance);
 };

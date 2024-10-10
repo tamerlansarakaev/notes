@@ -4,7 +4,6 @@ import {
   Input,
   ListItemButton,
   Modal,
-  TextareaAutosize,
   Typography,
   debounce,
 } from "@mui/material";
@@ -32,6 +31,8 @@ import {
   upperCaseNote,
   writeDataNote,
 } from "../../utils/utils";
+import TextArea from "../../Components/TextArea/TextArea";
+import { ENoteStatuses } from "../../enums";
 
 function Note() {
   const [changeActive, setChangeActive] = React.useState({
@@ -97,7 +98,11 @@ function Note() {
       }
     })();
 
-    if (changeActive.status && changeActive.type === "UpperCase" && note) {
+    if (
+      changeActive.status &&
+      changeActive.type === ENoteStatuses.UPPERCASE &&
+      note
+    ) {
       const upperNote = upperCaseNote(note);
 
       if (!upperNote) return;
@@ -142,10 +147,12 @@ function Note() {
             padding: 0,
           }}
           disableRipple
-          onClick={() => setChangeActive({ type: "UpperCase", status: true })}
+          onClick={() =>
+            setChangeActive({ type: ENoteStatuses.UPPERCASE, status: true })
+          }
           onBlur={() => {
             setChangeActive({
-              type: "UpperCase",
+              type: ENoteStatuses.UPPERCASE,
               status: false,
             });
           }}
@@ -216,7 +223,10 @@ function Note() {
                   name="title"
                   inputProps={{ maxLength: 50 }}
                   onChange={(e) => {
-                    setChangeActive({ type: "Update Note", status: true });
+                    setChangeActive({
+                      type: ENoteStatuses.UPDATE,
+                      status: true,
+                    });
                     setNote((note: any) => {
                       return {
                         ...note,
@@ -226,28 +236,38 @@ function Note() {
                     });
                   }}
                   onBlur={() => {
-                    setChangeActive({ type: "Update Note", status: false });
+                    setChangeActive({
+                      type: ENoteStatuses.UPDATE,
+                      status: false,
+                    });
                   }}
                   placeholder="Write your Title"
                   disableUnderline
                   value={(note && note.title) || ""}
                 />
-                <TextareaAutosize
+                <TextArea
                   maxLength={5000}
+                  isSpeechText
                   className={NoteClassNames.description}
                   name="description"
-                  onChange={(e) => {
-                    setChangeActive({ type: "Update Note", status: true });
+                  handleWrite={(text) => {
+                    setChangeActive({
+                      type: ENoteStatuses.UPDATE,
+                      status: true,
+                    });
                     setNote((note: any) => {
                       return {
                         ...note,
-                        description: e.target.value,
+                        description: text,
                         date: new Date().getTime(),
                       };
                     });
                   }}
                   onBlur={() => {
-                    setChangeActive({ type: "Update Note", status: false });
+                    setChangeActive({
+                      type: ENoteStatuses.UPDATE,
+                      status: false,
+                    });
                   }}
                   style={{
                     minHeight: "500px",
